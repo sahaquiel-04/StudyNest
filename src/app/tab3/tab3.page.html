@@ -1,0 +1,81 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Messages</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+  <ion-row class="stickyheader ion-align-items-center" style="justify-content: space-between; padding:0px;">
+    <ion-col size="auto">
+      <ion-title class="text-primary">Messages</ion-title>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-button fill="clear" class="card-button">
+        <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <!-- Search Bar -->
+  <div class="search-section">
+    <ion-searchbar 
+      [(ngModel)]="searchText" 
+      (ionInput)="filterChats()"
+      placeholder="Search messages..."
+      animated
+    ></ion-searchbar>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="filteredChats.length === 0 && !searchText" class="empty-state">
+    <ion-icon name="chatbubbles-outline" class="empty-icon"></ion-icon>
+    <h2 class="text-secondary">No Messages Yet</h2>
+    <p class="text-normal">Start a conversation with your classmates!</p>
+  </div>
+
+  <!-- No Search Results -->
+  <div *ngIf="filteredChats.length === 0 && searchText" class="empty-state">
+    <ion-icon name="search-outline" class="empty-icon"></ion-icon>
+    <h2 class="text-secondary">No Results Found</h2>
+    <p class="text-normal">Try searching with different keywords</p>
+  </div>
+
+  <!-- Chat List -->
+  <ion-list *ngIf="filteredChats.length > 0" class="chat-list">
+    <ion-item 
+      *ngFor="let chat of filteredChats" 
+      button 
+      (click)="openChat(chat)"
+      [class.unread]="chat.unread > 0"
+      lines="full"
+    >
+      <ion-avatar slot="start" class="chat-avatar">
+        <img [src]="chat.avatar" alt="{{ chat.name }}">
+        <div *ngIf="chat.online" class="online-indicator"></div>
+      </ion-avatar>
+
+      <ion-label>
+        <div class="chat-header">
+          <h2 class="chat-name">{{ chat.name }}</h2>
+          <p class="chat-time">{{ formatTime(chat.lastMessageTime) }}</p>
+        </div>
+        <div class="chat-preview">
+          <p class="last-message" [class.unread-text]="chat.unread > 0">
+            <ion-icon 
+              *ngIf="chat.lastMessageSender === 'You'" 
+              name="checkmark-done-outline"
+              [class.read]="chat.lastMessageRead"
+            ></ion-icon>
+            <span *ngIf="chat.lastMessageSender === 'You'">You: </span>
+            {{ chat.lastMessage }}
+          </p>
+          <ion-badge *ngIf="chat.unread > 0" color="primary">
+            {{ chat.unread }}
+          </ion-badge>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

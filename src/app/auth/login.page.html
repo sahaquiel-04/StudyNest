@@ -1,0 +1,61 @@
+<ion-content class="login-page" fullscreen scroll-y="false">
+  <div class="login-container">
+    
+    <!-- App Logo -->
+    <div class="logo-container">
+      <ion-img class="logo" src="assets/studynest.svg"></ion-img>
+    </div>
+
+    <!-- Title and Subtitle -->
+    <div class="header-text">
+      <h1 class="title text text-primary">Login</h1>
+      <p class="subtitle">Please sign in to continue.</p>
+    </div>
+
+    <!-- Email -->
+    <ion-item class="input-item">
+      <ion-label position="floating">Email</ion-label>
+      <ion-icon src="assets/person.svg" slot="start"></ion-icon>
+      <ion-input [(ngModel)]="email" type="email" inputmode="email"></ion-input>
+    </ion-item>
+
+    <!-- Inline Email Error -->
+    <p class="error-text" *ngIf="emailError">{{ emailError }}</p>
+
+    <!-- Password -->
+    <ion-item class="input-item">
+      <ion-label position="floating">Password</ion-label>
+      <ion-icon src="assets/lock.svg" slot="start"></ion-icon>
+      <ion-input [(ngModel)]="password" type="password"></ion-input>
+    </ion-item>
+
+    <!-- Inline Password Error -->
+    <p class="error-text" *ngIf="passwordError">{{ passwordError }}</p>
+
+    <!-- Inline Auth Error -->
+    <p class="error-text" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <!-- Remember Me -->
+    <ion-item lines="none" class="remember-row">
+      <ion-checkbox slot="start" [(ngModel)]="remember"></ion-checkbox>
+      <ion-label>Remember me next time</ion-label>
+    </ion-item>
+
+    <!-- Sign In Button -->
+    <ion-button 
+      expand="block" 
+      class="sign-in" 
+      [disabled]="!email || !password"
+      (click)="signIn()"
+    >
+      Sign in
+    </ion-button>
+
+    <!-- Register Link -->
+    <p class="signup-link">
+      Don’t have an account? 
+      <a (click)="goToRegister()">Sign up</a>
+    </p>
+
+  </div>
+</ion-content>

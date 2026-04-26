@@ -1,0 +1,55 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+  <!-- Progress Section -->
+   <app-stats-overview [stats]="stats"></app-stats-overview>
+   
+  <!-- Recent Activities Section -->
+  <h2 class="text-secondary greeting">Recent Activities</h2>
+
+  <!-- Empty State -->
+  <div *ngIf="groupedActivities.length === 0" class="empty-state">
+    <ion-icon name="newspaper-outline" class="empty-icon"></ion-icon>
+    <h3 class="text-secondary">No Recent Activities</h3>
+    <p class="text-normal">Activities from your classes will appear here</p>
+  </div>
+
+  <!-- Activities Feed Grouped by Class -->
+  <div class="activities-feed" *ngIf="groupedActivities.length > 0">
+    <div *ngFor="let group of groupedActivities" class="class-group">
+      
+      <!-- Class Header -->
+      <div class="class-header" (click)="openClassDetails(group.classId)">
+        <h3 class="class-name">{{ group.className }}</h3>
+        <ion-chip class="activity-count">
+          <ion-label>{{ group.activities.length }} {{ group.activities.length === 1 ? 'activity' : 'activities' }}</ion-label>
+        </ion-chip>
+        <ion-icon name="chevron-forward-outline" class="chevron-icon"></ion-icon>
+      </div>
+
+      <!-- Activities for this class -->
+      <div class="class-activities">
+        <app-activity-card 
+          *ngFor="let activity of group.activities" 
+          [activity]="activity"
+          [currentUserAvatar]="currentUser.avatar"
+          (commentAdded)="onCommentAdded($event)"
+          (turnInClicked)="onTurnIn($event)"
+          (attachmentClicked)="onAttachmentClick($event)"
+        ></app-activity-card>
+      </div>
+    </div>
+
+    <!-- End of Feed -->
+    <div class="text-normal end-of-feed">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      You're all caught up!
+    </div>
+  </div>
+
+</ion-content>

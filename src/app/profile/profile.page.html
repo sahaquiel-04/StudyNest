@@ -1,0 +1,121 @@
+<ion-content>
+  <div class="profile-container" *ngIf="profile; else noUser">
+    
+    <!-- Header with gradient and avatar -->
+    <div class="profile-header">
+      <div class="header-gradient"></div>
+      <ion-avatar class="profile-avatar" (click)="triggerAvatarInput()">
+        <img [src]="avatarPreview || profile.avatar || 'assets/profile.svg'" [alt]="profile.fullName || profile.username">
+      </ion-avatar>
+      <h1 class="profile-name">{{ profile.fullName || profile.username }}</h1>
+    </div>
+
+    <!-- Content section -->
+    <div class="profile-content">
+      
+      <!-- Info section -->
+      <div class="info-section">
+        <div class="info-item">
+          <span class="info-label">Phone</span>
+          <span class="info-value">{{ profile.phone || '—' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Mail</span>
+          <span class="info-value">{{ profile.email || '—' }}</span>
+        </div>
+      </div>
+
+      <!-- Menu list -->
+      <ion-list class="menu-list">
+
+        <ion-item class="menu-item" lines="full" button (click)="startEdit()">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label>Profile details</ion-label>
+        </ion-item>
+
+        <ion-item class="menu-item" lines="full" button (click)="goHome()">
+          <ion-icon name="settings-outline" slot="start"></ion-icon>
+          <ion-label>Settings</ion-label>
+        </ion-item>
+
+        <ion-item class="menu-item" lines="none" button (click)="logout()">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          <ion-label>Log out</ion-label>
+        </ion-item>
+      </ion-list>
+
+    </div>
+  </div>
+
+  <!-- Hidden file input for avatar upload -->
+  <input id="avatarInput" type="file" accept="image/*" style="display:none" (change)="onFileSelected($event)">
+
+  <!-- Edit Modal -->
+  <ion-modal [isOpen]="editing" [presentingElement]="routerOutlet.nativeEl" [backdropDismiss]="false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancelEdit()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Edit Profile</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-list>
+          <ion-item lines="none">
+            <ion-label position="stacked">Profile Photo</ion-label>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:8px;">
+              <ion-avatar style="width:64px;height:64px;">
+                <img [src]="avatarPreview || profile.avatar || 'assets/profile.svg'" [alt]="profile.fullName || profile.username">
+              </ion-avatar>
+              <ion-button size="small" color="primary" (click)="triggerAvatarInput()">Upload</ion-button>
+            </div>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Full Name</ion-label>
+            <ion-input [(ngModel)]="fullName" placeholder="Enter full name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input [(ngModel)]="email" type="email" placeholder="Enter email"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Phone</ion-label>
+            <ion-input [(ngModel)]="phone" type="tel" placeholder="Enter phone number"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Role</ion-label>
+            <ion-input [(ngModel)]="role" placeholder="Enter role"></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <div class="edit-actions">
+          <ion-button expand="block" color="primary" (click)="saveProfile()">
+            Save Changes
+          </ion-button>
+          <ion-button expand="block" fill="outline" color="medium" (click)="cancelEdit()">
+            Cancel
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- No user template -->
+  <ng-template #noUser>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:24px;">
+      <ion-icon name="person-circle-outline" style="font-size:80px;color:var(--ion-color-medium);margin-bottom:16px;"></ion-icon>
+      <h2 style="color:var(--ion-text-color);margin-bottom:8px;">No Profile Found</h2>
+      <p style="color:var(--ion-color-medium);text-align:center;margin-bottom:24px;">Please login or register to view your profile.</p>
+      <ion-button routerLink="/auth/login" color="primary">Go to Login</ion-button>
+    </div>
+  </ng-template>
+</ion-content>

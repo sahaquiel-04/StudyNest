@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">  
+    </ion-buttons>
+    <ion-title>Create Class</ion-title>
+
+    <ion-button (click)="dismiss()" slot="end">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+  </ion-button>
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content>
+  <form #classForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+      
+      <!-- Class Title -->
+      <ion-item lines="full">
+        <ion-input
+          label="Class Title"
+          labelPlacement="stacked"
+          [(ngModel)]="classData.title"
+          name="title"
+          placeholder="e.g., Software Engineering"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <!-- Section/Subtitle -->
+      <ion-item lines="full">
+        <ion-input
+          label="Section"
+          labelPlacement="stacked"
+          [(ngModel)]="classData.subtitle"
+          name="subtitle"
+          placeholder="e.g., BSCS-3C"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <!-- Instructor Name -->
+      <ion-item lines="full">
+        <ion-input
+          label="Instructor Name"
+          labelPlacement="stacked"
+          [(ngModel)]="classData.name"
+          name="instructorName"
+          placeholder="Your name"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <!-- Description -->
+      <ion-item lines="full">
+        <ion-textarea
+          label="Description"
+          labelPlacement="stacked"
+          [(ngModel)]="classData.content"
+          name="description"
+          placeholder="Brief description of the class"
+          rows="4"
+          required
+        ></ion-textarea>
+      </ion-item>
+
+      <!-- Info Card -->
+      <ion-card class="info-card">
+        <ion-card-content>
+          <div class="info-item">
+            <ion-icon name="information-circle-outline" color="primary"></ion-icon>
+            <p>A unique class code will be generated automatically when you create the class.</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Action Buttons -->
+      <div class="button-container">
+        
+        <ion-button 
+          expand="block" 
+          color="primary" 
+          type="submit"
+          [disabled]="!classForm.valid"
+        >
+          Create Class
+        </ion-button>
+
+        <ion-button expand="block" color="primary" fill="clear" (click)="dismiss()">
+          Cancel
+        </ion-button>
+      </div>
+
+    </div>
+  </form>
+</ion-content>

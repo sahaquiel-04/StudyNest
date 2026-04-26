@@ -1,0 +1,124 @@
+<ion-content [fullscreen]="true">
+  
+  <!-- Class Header Banner -->
+  <div class="class-banner">
+    <div class="banner-overlay">
+      <ion-button fill="clear" class="back-button" (click)="goBack()">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" class="more-button" (click)="openMoreOptions($event)">
+        <ion-icon name="ellipsis-vertical-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="class-info-section">
+    <div class="class-info-content">
+      <div class="class-text">
+        <h1 class="class-title">{{ classData?.title }}</h1>
+        <p class="class-subtitle">{{ classData?.subtitle }}</p>
+        <p class="class-instructor">{{ classData?.name }}</p>
+      </div>
+      <div class="class-avatar">
+        <img [src]="classData?.avatar" alt="Class Avatar">
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs-section">
+    <ion-segment [(ngModel)]="selectedSegment" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="activities">
+        <ion-label>Activities</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="classmates">
+        <ion-label>Members</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="materials">
+        <ion-label>Materials</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div class="tab-content">
+    
+    <!-- Activities Tab -->
+    <div *ngIf="selectedSegment === 'activities'" class="activities-content">
+      <app-activity-card
+        *ngFor="let activity of activities"
+        [activity]="activity"
+        [currentUserAvatar]="'assets/profile.svg'"
+        (cardClicked)="onActivityCardClick($event)"
+        (commentAdded)="onCommentAdded($event)"
+        (attachmentClicked)="onAttachmentClicked($event)">
+      </app-activity-card>
+
+      <!-- Empty State -->
+      <div *ngIf="activities.length === 0" class="empty-state">
+        <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+        <p>No activities yet</p>
+      </div>
+    </div>
+
+    <!-- Classmates Tab -->
+    <div *ngIf="selectedSegment === 'classmates'" class="classmates-content">
+      <ion-list>
+        <ion-item *ngFor="let classmate of classmates" lines="full">
+          <ion-avatar slot="start">
+            <img [src]="classmate.avatar" alt="{{ classmate.name }}">
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ classmate.name }}</h2>
+            <p *ngIf="classmate.role === 'teacher'" class="role-badge">Teacher</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <!-- Empty State -->
+      <div *ngIf="classmates.length === 0" class="empty-state">
+        <ion-icon name="person-outline" class="empty-icon"></ion-icon>
+        <p>No classmates yet</p>
+      </div>
+    </div>
+
+    <!-- Materials Tab -->
+    <div *ngIf="selectedSegment === 'materials'" class="materials-content">
+      <ion-list>
+        <ion-item *ngFor="let material of materials" lines="full">
+          <ion-icon src="assets/file.svg" slot="start" color="primary"></ion-icon>
+          <ion-label>
+            <h2>{{ material.name }}</h2>
+            <p>{{ material.type }} • {{ material.size }} • {{ material.uploadDate | date:'MMM d, y' }}</p>
+            <p class="uploaded-by">Uploaded by {{ material.uploadedBy }}</p>
+          </ion-label>
+          <ion-button fill="clear" slot="end" (click)="downloadMaterial(material)">
+            <ion-icon name="download-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      
+      <!-- Empty State -->
+      <div *ngIf="materials.length === 0" class="empty-state">
+        <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+        <p>No materials yet</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAB Button (only show for teachers) -->
+  <ion-fab *ngIf="isTeacher" vertical="bottom" horizontal="end" slot="fixed" class="class-fab">
+    <ion-fab-button>
+      <ion-icon src="assets/add.svg"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="openCreateAnnouncement()" color="primary">
+        <ion-icon name="chatbubble-ellipses"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button (click)="openCreateAssignment()" color="primary">
+        <ion-icon name="document-text-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

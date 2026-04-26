@@ -1,0 +1,38 @@
+<ion-app>
+  <ion-menu side="start" menuId="main-menu" contentId="main-content">
+    <ion-header>
+      <ion-toolbar class="no-shadow">
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item button (click)="navigateToHome()" lines="none">
+          <ion-icon slot="start" src="assets/home.svg"></ion-icon>
+          Home
+        </ion-item>
+        
+        <ion-item button (click)="navigateToProfile()" lines="none">
+          <ion-icon slot="start" src="assets/profile.svg"></ion-icon>
+          Profile
+        </ion-item>
+        
+        <ion-item button (click)="navigateToSettings()" lines="none">
+          <ion-icon slot="start" src="assets/settings.svg"></ion-icon>
+          Settings
+        </ion-item>
+        
+        <ion-item button (click)="logout()" lines="none">
+          <ion-icon src="assets/logout.svg" slot="start"></ion-icon>
+          Logout
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <!-- Main content -->
+  <div class="ion-page" id="main-content">
+    <ion-router-outlet></ion-router-outlet>
+  </div>
+</ion-app>

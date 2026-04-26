@@ -1,0 +1,172 @@
+/* ===========================
+   Layout & Container
+   =========================== */
+.login-page {
+  --ion-background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  width: 92%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 36px 16px;
+  text-align: center;
+}
+
+/* ===========================
+   Images
+   =========================== */
+ion-img {
+  height: 120px;
+  padding: 20px;
+}
+
+.logo-container{
+  display: flex;
+  justify-content: center;
+}
+
+/* ===========================
+   Text Styles
+   =========================== */
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 6px 0 4px;
+  color: #EE9D4E;
+}
+
+.subtitle {
+  color: #b9b9b9;
+  margin-bottom: 20px;
+}
+
+/* ===========================
+   Input Fields
+   =========================== */
+ion-item {
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.input-item {
+  border: solid 1px #b0b0b0;
+  border-radius: 12px;
+  margin: 10px 0;
+  padding: 6px 12px;
+  --background: transparent;
+  overflow: hidden;
+}
+
+/* ===========================
+   Error Text
+   =========================== */
+.error-text {
+  margin-top: 6px;
+  color: #EE9D4E;
+  font-size: 0.85rem;
+  text-align: left;
+  padding-left: 8px;
+  animation: pop 0.25s ease-out;
+}
+
+@keyframes pop {
+  0% { opacity: 0; }
+  70% { opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* ===========================
+   Buttons
+   =========================== */
+.sign-in {
+  --border-radius: 50px;
+  --color: #fff;
+  margin-top: 6px;
+  height: 48px;
+  font-weight: 600;
+}
+
+/* ===========================
+   Links
+   =========================== */
+.remember-row {
+  --ion-background-color: transparent;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 8px 0 18px;
+}
+
+.signup-link {
+  color: #6b7280;
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+.signup-link a {
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  color: #EE9D4E;
+}
+
+/* ===========================
+   Dark Mode
+   =========================== */
+.dark .login-page {
+  --ion-background-color: #0f1724;
+}
+
+.dark .login-container {
+  color: #e6eefc;
+}
+
+.dark .title {
+  color: #EE9D4E;
+}
+
+.dark .subtitle,
+.dark .signup-link,
+.dark .remember-row {
+  color: #9aa6b2;
+}
+
+.dark .input-item {
+  --background: transparent;
+}
+
+.dark .sign-in {
+  --background: #EE9D4E;
+  --color: #0b1220;
+}
+
+/* ===========================
+   System Dark Mode
+   =========================== */
+@media (prefers-color-scheme: dark) {
+  .login-page {
+    --ion-background-color: #0f1724;
+  }
+  .login-container {
+    color: #e6eefc;
+  }
+  .title {
+    color: #EE9D4E;
+  }
+  .subtitle,
+  .signup-link,
+  .remember-row {
+    color: #9aa6b2;
+  }
+  .input-item {
+    --background: #0b1220;
+  }
+  .sign-in {
+    --background: #fb923c;
+    --color: #0b1220;
+  }
+}

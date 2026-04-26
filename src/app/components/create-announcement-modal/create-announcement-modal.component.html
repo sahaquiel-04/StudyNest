@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Create Announcement</ion-title>
+    <ion-buttons slot="end">
+      <ion-button 
+        (click)="createAnnouncement()" 
+        [strong]="true"
+        [disabled]="!isFormValid()">
+        Post
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <!-- Announcement Title -->
+    <ion-item lines="full">
+      <ion-label position="stacked">Title *</ion-label>
+      <ion-input
+        [(ngModel)]="announcementTitle"
+        placeholder="Enter announcement title"
+        maxlength="100">
+      </ion-input>
+    </ion-item>
+
+    <!-- Announcement Message -->
+    <ion-item lines="full">
+      <ion-label position="stacked">Message *</ion-label>
+      <ion-textarea
+        [(ngModel)]="announcementDescription"
+        placeholder="What would you like to announce to your class?"
+        [autoGrow]="true"
+        rows="8">
+      </ion-textarea>
+    </ion-item>
+
+    <!-- Attachments Section -->
+    <ion-item lines="none" class="section-header">
+      <ion-label>
+        <h3>Attachments</h3>
+      </ion-label>
+    </ion-item>
+
+    <!-- Attach File Button -->
+    <ion-item lines="none" button (click)="attachFile()">
+      <ion-icon name="attach-outline" slot="start" color="primary"></ion-icon>
+      <ion-label color="primary">Add Attachment</ion-label>
+    </ion-item>
+
+    <!-- Attachments List -->
+    <div class="attachments-list" *ngIf="attachments.length > 0">
+      <ion-chip 
+        *ngFor="let attachment of attachments"
+        color="primary"
+        outline="true">
+        <ion-label>{{ attachment.name }}</ion-label>
+        <ion-icon 
+          name="close-circle-outline" 
+          (click)="removeAttachment(attachment.id)">
+        </ion-icon>
+      </ion-chip>
+    </div>
+  </ion-list>
+
+  <!-- Help Text -->
+  <div class="help-text">
+    <ion-note color="medium">
+      * Required fields. All students in this class will be notified of this announcement.
+    </ion-note>
+  </div>
+</ion-content>

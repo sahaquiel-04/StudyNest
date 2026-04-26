@@ -1,0 +1,77 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Classes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+
+  <ion-row class="stickyheader ion-align-items-center" style="justify-content: space-between; padding:0px;">
+    <ion-col size="auto">
+      <ion-title class="text-primary">Nests</ion-title>
+    </ion-col>
+  </ion-row>
+  
+  <!-- Empty State -->
+  <div *ngIf="classes.length === 0" class="empty-state">
+    <ion-icon name="school-outline" class="empty-icon"></ion-icon>
+    <h2 class="text-secondary">No Nests Yet</h2>
+    <p class="text-normal">Join or create a nest to get started!</p>
+    <ion-button color="primary" (click)="addItem()">
+      <ion-icon slot="start" name="add-outline"></ion-icon>
+      Get Started
+    </ion-button>
+  </div>
+
+  <!-- Classes List -->
+  <div class="card-container" *ngIf="classes.length > 0">
+    <ion-card *ngFor="let c of classes; let i = index" (click)="navigateToClass(c.id)" class="clickable-card">
+      <ion-card-header class="card-header-flex">
+        <div>
+          <ion-card-title class="text-secondary">{{ c.title }}</ion-card-title>
+          <ion-card-subtitle class="text-tertiary">{{ c.subtitle }}</ion-card-subtitle>
+          <p>{{ c.name }}</p>
+        </div>
+        <img [src]="c.avatar" alt="Avatar" class="avatar">
+      </ion-card-header>
+      
+      <ion-card-content>
+        <p>{{ c.content }}</p>
+      </ion-card-content>
+      
+      <div class="class-card-wrapper">
+        <ion-button fill="clear" class="card-button" (click)="openPopover($event, i); $event.stopPropagation()">
+          <ion-icon src="assets/threedots1.svg" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-card>
+  </div>
+
+  <!-- Popover (moved outside the loop for better performance) -->
+  <ion-popover [isOpen]="popoverOpen" [event]="popoverEvent" (didDismiss)="popoverOpen = false">
+    <ng-template>
+      <ion-content>
+        <ion-list lines="none">
+          <ion-item button (click)="viewClassDetails()">
+            <ion-icon slot="start" name="eye-outline" color="primary"></ion-icon>
+            <ion-label>View Details</ion-label>
+          </ion-item>
+          <ion-item button (click)="editClass()">
+            <ion-icon slot="start" name="create-outline" color="primary"></ion-icon>
+            <ion-label>Edit</ion-label>
+          </ion-item>
+          <ion-item button (click)="leaveClass()">
+            <ion-icon slot="start" name="exit-outline" color="warning"></ion-icon>
+            <ion-label>Leave Class</ion-label>
+          </ion-item>
+          <ion-item button (click)="deleteClass(selectedIndex)">
+            <ion-icon slot="start" name="trash-outline" color="danger"></ion-icon>
+            <ion-label color="danger">Delete</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-popover>
+
+</ion-content>

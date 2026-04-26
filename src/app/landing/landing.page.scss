@@ -1,0 +1,79 @@
+.landing-page {
+  --ion-background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-container {
+  width: 92%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 36px 16px;
+  text-align: center;
+}
+.logo-container{
+  display: flex;
+  justify-content: center;
+}
+ion-img {
+  height: 120px;
+  padding: 20px;
+}
+
+/* Text Section */
+.text-section {
+  margin-bottom: 24px;
+}
+
+.slogan {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 6px 0 8px;
+}
+
+.subtext {
+  color: #6b7280;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* CTA Buttons */
+.cta-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.landing-btn {
+  --border-radius: 50px;
+  height: 48px;
+  font-weight: 600;
+  color: white;
+}
+
+.sign-in-btn {
+  --border-radius: 50px;
+  height: 48px;
+  font-weight: 600;
+  color: #EE9D4E;
+}
+
+/* Dark Mode Support */
+.dark .landing-page {
+  --ion-background-color: #0f1724;
+}
+
+@media (prefers-color-scheme: dark) {
+  .landing-page {
+    --ion-background-color: #0f1724;
+  }
+
+  .slogan {
+    color: #ffb680;
+  }
+
+  .subtext {
+    color: #9aa6b2;
+  }
+}

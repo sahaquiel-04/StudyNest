@@ -1,0 +1,103 @@
+<ion-content class="register-page" fullscreen scroll-y="false">
+  <div class="register-container">
+    <div class="logo-container">
+      <ion-img class="logo" src="assets/studynest-light.svg"></ion-img>
+    </div>
+    <h1 class="title">Create Account</h1>
+
+    <!-- Step 1: Email -->
+    <div *ngIf="step === 1">
+      <p class="subtitle">Enter your email address</p>
+      <ion-item class="input-item">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input [(ngModel)]="email" type="email"></ion-input>
+      </ion-item>
+
+      <p class="error-text" *ngIf="error && step === 1">{{ error }}</p>
+
+      <ion-button expand="block" class="next-btn" [disabled]="!email" (click)="nextStep()">
+        Next
+      </ion-button>
+    </div>
+
+    <!-- Step 2: Name -->
+    <div *ngIf="step === 2">
+      <p class="subtitle">What’s your full name?</p>
+      <ion-item class="input-item">
+        <ion-label position="floating">Full Name</ion-label>
+        <ion-input [(ngModel)]="fullName" type="text"></ion-input>
+      </ion-item>
+
+      <p class="error-text" *ngIf="error && step === 2">{{ error }}</p>
+
+      <ion-button expand="block" class="next-btn" [disabled]="!fullName" (click)="nextStep()">
+        Next
+      </ion-button>
+      <ion-button fill="clear" (click)="prevStep()">Back</ion-button>
+    </div>
+
+    <!-- Step 3: Password -->
+    <div *ngIf="step === 3">
+      <p class="subtitle">Create your password</p>
+
+      <ion-item class="input-item">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input [(ngModel)]="password" [type]="showPassword ? 'text' : 'password'"></ion-input>
+        <ion-icon
+    *ngIf="!showPassword"
+    src="assets/icons/eye.svg"
+    alt="Show"
+    class="custom-eye"
+    (click)="togglePassword()"
+    slot="end"
+  />
+  <ion-icon
+    *ngIf="showPassword"
+    src="assets/icons/eye-off.svg"
+    alt="Hide"
+    class="custom-eye"
+    (click)="togglePassword()"
+    slot="end"
+  />
+      </ion-item>
+
+      <ion-item class="input-item">
+        <ion-label position="floating">Confirm Password</ion-label>
+         <ion-input [(ngModel)]="confirm" [type]="showConfirm ? 'text' : 'password'"></ion-input>
+        <ion-icon
+    *ngIf="!showConfirm"
+    src="assets/icons/eye.svg"
+    alt="Show"
+    class="custom-eye"
+    (click)="togglePassword()"
+    slot="end"
+  />
+  <ion-icon
+    *ngIf="showConfirm"
+    src="assets/icons/eye-off.svg"
+    alt="Hide"
+    class="custom-eye"
+    (click)="togglePassword()"
+    slot="end"
+  />
+      </ion-item>
+
+      <p class="error-text" *ngIf="error && step === 3">{{ error }}</p>
+
+      <ion-button
+        expand="block"
+        class="next-btn"
+        [disabled]="!password || !confirm"
+        (click)="signUp()"
+      >
+        Finish
+      </ion-button>
+      <ion-button fill="clear" (click)="prevStep()">Back</ion-button>
+    </div>
+
+    <p class="signin-link" *ngIf="step === 1">
+      Already have an account?
+      <a (click)="goToLogin()">Sign in</a>
+    </p>
+  </div>
+</ion-content>

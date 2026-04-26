@@ -1,0 +1,235 @@
+/* Search Section */
+.search-section {
+  padding: 8px 16px 16px 16px;
+  background: var(--ion-background-color);
+
+  ion-searchbar {
+    --background: var(--ion-card-background);
+    --border-radius: 12px;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 0;
+  }
+}
+
+/* Chat List */
+.chat-list {
+  padding: 0 16px 80px 16px;
+  background: transparent;
+
+  ion-item {
+    --background: var(--ion-card-background);
+    --border-color: var(--app-border-color);
+    --padding-start: 16px;
+    --padding-end: 16px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      --background: var(--ion-item-background);
+      transform: translateX(4px);
+    }
+
+    &.unread {
+      --background: rgba(238, 157, 78, 0.05);
+      border-left: 3px solid none;
+    }
+  }
+}
+
+/* Chat Avatar */
+.chat-avatar {
+  width: 56px;
+  height: 56px;
+  position: relative;
+
+  img {
+    border: 2px solid var(--ion-background-color);
+  }
+}
+
+.online-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  background: #2dd36f;
+  border: 2px solid var(--ion-background-color);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* Chat Header */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.chat-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ion-text-color);
+  margin: 0;
+  flex: 1;
+}
+
+.chat-time {
+  font-size: 0.75rem;
+  color: var(--ion-color-medium);
+  margin: 0;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+
+/* Chat Preview */
+.chat-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.last-message {
+  font-size: 0.9rem;
+  color: var(--ion-color-medium);
+  margin: 0;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  &.unread-text {
+    color: var(--ion-text-color);
+    font-weight: 500;
+  }
+
+  ion-icon {
+    font-size: 1rem;
+    color: var(--ion-color-medium);
+    flex-shrink: 0;
+
+    &.read {
+      color: var(--ion-color-primary);
+    }
+  }
+
+  span {
+    flex-shrink: 0;
+  }
+}
+
+ion-badge {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 10px;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+  min-height: 50vh;
+
+  .empty-icon {
+    font-size: 100px;
+    color: var(--ion-color-medium);
+    opacity: 0.5;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    margin: 16px 0 8px 0;
+    color: var(--ion-text-color);
+  }
+
+  p {
+    margin: 0;
+    color: var(--ion-color-medium);
+    max-width: 300px;
+  }
+}
+
+/* Sticky Header */
+.stickyheader {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  background: var(--ion-background-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  ion-title {
+    padding-left: 11px;
+  }
+}
+
+/* Card Button */
+.card-button {
+  --color: var(--ion-text-color);
+  --background: transparent;
+  --padding-start: 8px;
+  --padding-end: 8px;
+
+  ion-icon {
+    font-size: 1.5rem;
+  }
+
+  &:hover {
+    --color: var(--ion-color-primary);
+  }
+}
+
+/* Dark Mode Adjustments */
+.dark {
+  .chat-list ion-item {
+    &.unread {
+      --background: rgba(238, 157, 78, 0.1);
+    }
+
+    &:hover {
+      --background: var(--ion-item-background);
+    }
+  }
+
+  .online-indicator {
+    background: #2fdf75;
+  }
+}
+
+/* Animation */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.chat-list ion-item {
+  animation: slideInRight 0.3s ease;
+  animation-fill-mode: both;
+}
+
+.chat-list ion-item:nth-child(1) { animation-delay: 0.05s; }
+.chat-list ion-item:nth-child(2) { animation-delay: 0.1s; }
+.chat-list ion-item:nth-child(3) { animation-delay: 0.15s; }
+.chat-list ion-item:nth-child(4) { animation-delay: 0.2s; }
+.chat-list ion-item:nth-child(5) { animation-delay: 0.25s; }

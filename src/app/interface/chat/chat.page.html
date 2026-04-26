@@ -1,0 +1,168 @@
+<ion-header class="ion-no-border chat-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" fill="clear" class="back-button">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <div class="header-info" (click)="null">
+      <ion-avatar class="header-avatar">
+        <img [src]="chatAvatar" [alt]="chatName" />
+        <div *ngIf="isOnline" class="online-dot"></div>
+      </ion-avatar>
+      <div class="header-text">
+        <h3 class="header-name">{{ chatName }}</h3>
+        <p class="header-status" *ngIf="!isTyping">
+          <span *ngIf="isOnline" class="online-label">Online</span>
+          <span *ngIf="!isOnline" class="offline-label">Offline</span>
+        </p>
+        <p class="header-status typing-label" *ngIf="isTyping">typing...</p>
+      </div>
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="action-btn">
+        <ion-icon name="call-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" class="action-btn">
+        <ion-icon name="videocam-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="chat-content">
+  <div class="messages-container">
+
+    <ng-container *ngFor="let message of messages; let i = index">
+
+      <!-- Date Label -->
+      <div *ngIf="shouldShowDateLabel(i)" class="date-label">
+        <span>{{ formatDateLabel(message.timestamp) }}</span>
+      </div>
+
+      <!-- Message Row -->
+      <div
+        class="message-row"
+        [class.outgoing]="message.senderId === 'me'"
+        [class.incoming]="message.senderId !== 'me'"
+        [class.consecutive]="isConsecutive(i)"
+      >
+        <!-- Incoming Avatar (group only or last in chain) -->
+        <div class="avatar-col">
+          <ion-avatar
+            class="msg-avatar"
+            *ngIf="message.senderId !== 'me' && shouldShowAvatar(i)"
+          >
+            <img [src]="chatAvatar" [alt]="chatName" />
+          </ion-avatar>
+          <div
+            class="avatar-spacer"
+            *ngIf="message.senderId !== 'me' && !shouldShowAvatar(i)"
+          ></div>
+        </div>
+
+        <!-- Bubble -->
+        <div class="bubble-col">
+          <!-- Sender name for group chats -->
+          <p class="sender-name" *ngIf="shouldShowName(i)">
+            {{ message.senderName }}
+          </p>
+
+          <div
+            class="bubble"
+            [class.bubble-out]="message.senderId === 'me'"
+            [class.bubble-in]="message.senderId !== 'me'"
+          >
+            <p class="bubble-text">{{ message.text }}</p>
+            <div class="bubble-meta">
+              <span class="msg-time">{{ formatTime(message.timestamp) }}</span>
+              <span
+                class="msg-status"
+                *ngIf="message.senderId === 'me'"
+              >
+                <ion-icon
+                  *ngIf="message.status === 'sending'"
+                  name="checkmark-outline"
+                  class="status-icon pending"
+                ></ion-icon>
+                <ion-icon
+                  *ngIf="message.status === 'sent' || message.status === 'delivered'"
+                  name="checkmark-done-outline"
+                  class="status-icon sent"
+                ></ion-icon>
+                <ion-icon
+                  *ngIf="message.status === 'read'"
+                  name="checkmark-done-outline"
+                  class="status-icon read"
+                ></ion-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Typing Indicator -->
+    <div class="message-row incoming" *ngIf="isTyping">
+      <div class="avatar-col">
+        <ion-avatar class="msg-avatar">
+          <img [src]="chatAvatar" [alt]="chatName" />
+        </ion-avatar>
+      </div>
+      <div class="bubble-col">
+        <div class="bubble bubble-in typing-bubble">
+          <div class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-footer class="chat-footer ion-no-border">
+  <div class="input-row">
+    <ion-button fill="clear" class="attach-btn">
+      <ion-icon name="attach-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+
+    <div class="input-wrapper">
+      <ion-textarea
+        #messageInput
+        [(ngModel)]="messageText"
+        (ionInput)="onTextChange()"
+        (keydown)="onKeyDown($event)"
+        placeholder="Type a message..."
+        rows="1"
+        autoGrow="true"
+        class="message-textarea"
+      ></ion-textarea>
+      <ion-button fill="clear" class="emoji-btn">
+        <ion-icon name="happy-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+
+    <ion-button
+      fill="clear"
+      class="send-btn"
+      [class.active]="canSend"
+      (click)="sendMessage()"
+    >
+      <ion-icon
+        *ngIf="canSend"
+        name="send-outline"
+        slot="icon-only"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="!canSend"
+        name="mic-outline"
+        slot="icon-only"
+      ></ion-icon>
+    </ion-button>
+  </div>
+</ion-footer>

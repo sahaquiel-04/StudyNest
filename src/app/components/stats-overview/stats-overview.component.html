@@ -1,0 +1,65 @@
+<ion-card class="stats-card">
+  <ion-card-content>
+    <ion-title class="text-secondary">Your Progress</ion-title>
+    
+    <!-- Main Stats Grid -->
+    <div class="stats-grid">
+      
+      <!-- Completion Rate (Featured) -->
+      <div class="stat-item featured">
+        <div class="stat-header">
+          <ion-icon name="trophy-outline" class="stat-icon"></ion-icon>
+          <span class="stat-label">Completion Rate</span>
+        </div>
+        <div class="completion-rate">
+          <span class="rate-number">{{ completionRate }}%</span>
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width]="progressBarWidth"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other Stats -->
+      <div class="stat-item">
+        <div class="stat-header">
+          <ion-icon name="checkmark-circle-outline" class="stat-icon success"></ion-icon>
+          <span class="stat-label">Completed</span>
+        </div>
+        <span class="stat-value">{{ stats.completedAssignments }}</span>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-header">
+          <ion-icon name="time-outline" class="stat-icon warning"></ion-icon>
+          <span class="stat-label">Pending</span>
+        </div>
+        <span class="stat-value">{{ stats.pendingAssignments }}</span>
+      </div>
+
+      <div class="stat-item" *ngIf="stats.overdueAssignments > 0">
+        <div class="stat-header">
+          <ion-icon name="alert-circle-outline" class="stat-icon danger"></ion-icon>
+          <span class="stat-label">Overdue</span>
+        </div>
+        <span class="stat-value danger">{{ stats.overdueAssignments }}</span>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-header">
+          <ion-icon name="book-outline" class="stat-icon primary"></ion-icon>
+          <span class="stat-label">Classes</span>
+        </div>
+        <span class="stat-value">{{ stats.totalClasses }}</span>
+      </div>
+
+      <div class="stat-item" *ngIf="stats.streak && stats.streak > 0">
+        <div class="stat-header">
+          <ion-icon name="flame-outline" class="stat-icon streak"></ion-icon>
+          <span class="stat-label">Day Streak</span>
+        </div>
+        <span class="stat-value streak">{{ stats.streak }}</span>
+      </div>
+    </div>
+
+  </ion-card-content>
+</ion-card>

@@ -1,0 +1,408 @@
+/*
+ * Global Styles for Ionic App
+ * --------------------------------------------------------------------------
+ * Contains: 
+ * 1. Core Imports
+ * 2. Ionic Color System (Primary, Secondary, Tertiary, etc.)
+ * 3. Theme Variables (Light + Dark)
+ * 4. Base Ionic Overrides
+ * 5. Typography Utilities
+ * 6. Component Styles (Cards, Buttons, Menu)
+ * 7. Layout Utilities
+ */
+
+/* ==========================================================================
+   1. CORE IMPORTS
+========================================================================== */
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Dark mode auto system preference */
+@import '@ionic/angular/css/palettes/dark.system.css';
+
+/* ==========================================================================
+   2. IONIC COLOR SYSTEM
+========================================================================== */
+
+:root {
+  /* ===== PRIMARY (Orange) ===== */
+  --ion-color-primary: #EE9D4E;
+  --ion-color-primary-rgb: 238, 157, 78;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #d18a45;
+  --ion-color-primary-tint: #f0a760;
+
+  /* ===== SECONDARY (Green) ===== */
+  --ion-color-secondary: #A8C686;
+  --ion-color-secondary-rgb: 168, 198, 134;
+  --ion-color-secondary-contrast: #000000;
+  --ion-color-secondary-contrast-rgb: 0, 0, 0;
+  --ion-color-secondary-shade: #94ae76;
+  --ion-color-secondary-tint: #b1cc92;
+
+  /* ===== TERTIARY (Blue-Gray) ===== */
+  --ion-color-tertiary: #BFC9D1;
+  --ion-color-tertiary-rgb: 191, 201, 209;
+  --ion-color-tertiary-contrast: #000000;
+  --ion-color-tertiary-contrast-rgb: 0, 0, 0;
+  --ion-color-tertiary-shade: #a8b1b8;
+  --ion-color-tertiary-tint: #c5ced6;
+
+  /* ===== SUCCESS (Lighter Green) ===== */
+  --ion-color-success: #A8C686;
+  --ion-color-success-rgb: 168, 198, 134;
+  --ion-color-success-contrast: #000000;
+  --ion-color-success-contrast-rgb: 0, 0, 0;
+  --ion-color-success-shade: #94ae76;
+  --ion-color-success-tint: #b1cc92;
+
+  /* ===== WARNING (Orange) ===== */
+  --ion-color-warning: #EE9D4E;
+  --ion-color-warning-rgb: 238, 157, 78;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+  --ion-color-warning-shade: #d18a45;
+  --ion-color-warning-tint: #f0a760;
+
+  /* ===== DANGER (Red) ===== */
+  --ion-color-danger: #ee4e4e;
+  --ion-color-danger-rgb: 238, 78, 78;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #d14545;
+  --ion-color-danger-tint: #f06060;
+
+  /* ===== DARK (Dark Blue-Gray) ===== */
+  --ion-color-dark: #5C6A75;
+  --ion-color-dark-rgb: 92, 106, 117;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #515d67;
+  --ion-color-dark-tint: #6c7983;
+
+  /* ===== MEDIUM (Blue-Gray) ===== */
+  --ion-color-medium: #BFC9D1;
+  --ion-color-medium-rgb: 191, 201, 209;
+  --ion-color-medium-contrast: #000000;
+  --ion-color-medium-contrast-rgb: 0, 0, 0;
+  --ion-color-medium-shade: #a8b1b8;
+  --ion-color-medium-tint: #c5ced6;
+
+  /* ===== LIGHT (Very Light Gray) ===== */
+  --ion-color-light: #f5f5f5;
+  --ion-color-light-rgb: 245, 245, 245;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d8d8d8;
+  --ion-color-light-tint: #f6f6f6;
+}
+
+/* ==========================================================================
+   3. THEME VARIABLES
+========================================================================== */
+
+/* ----- Light Mode ----- */
+:root {
+  /* Backgrounds */
+  --ion-background-color: #f0f0f0;
+  --ion-card-background: #f6f6f6;
+  --ion-toolbar-background: #ffffff;
+  --ion-item-background: #f5f5f5;
+  --ion-tab-bar-background: #ffffff;
+
+  /* Text colors */
+  --ion-text-color: #707070;
+
+  /* Custom accents */
+  --app-border-color: #d3d3d3;
+  --app-card-radius: 21px;
+}
+
+/* ----- Dark Mode ----- */
+:root.dark {
+  /* Backgrounds */
+  --ion-background-color: #0f1724;
+  --ion-card-background: #1a283f;
+  --ion-toolbar-background: #152133;
+  --ion-item-background: #1a283f;
+  --ion-tab-bar-background: #152133;
+
+  /* Text colors */
+  --ion-text-color: #F1F3F5;
+
+  /* Custom accents */
+  --app-border-color: transparent;
+
+  /* Adjust color contrasts for dark mode */
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-secondary-contrast: #000000;
+  --ion-color-tertiary-contrast: #000000;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-light: #152133;
+  --ion-color-light-contrast: #ffffff;
+}
+
+/* Logo switching */
+.logo {
+  content: url('assets/studynest.svg');
+}
+
+.dark .logo {
+  content: url('assets/studynest-dark.svg');
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo {
+    content: url('assets/studynest-dark.svg');
+  }
+}
+
+/* ==========================================================================
+   4. BASE IONIC OVERRIDES
+========================================================================== */
+
+ion-content {
+  --background: var(--ion-background-color);
+  color: var(--ion-text-color);
+}
+
+ion-toolbar {
+  --background: var(--ion-toolbar-background);
+  color: var(--ion-text-color);
+}
+
+ion-item {
+  --background: var(--ion-item-background);
+  color: var(--ion-text-color);
+}
+
+ion-card {
+  --background: var(--ion-card-background);
+  background: var(--ion-card-background);
+  box-shadow: none;
+}
+
+ion-tab-bar {
+  --background: var(--ion-tab-bar-background);
+}
+
+/* Dark Mode Specific Overrides */
+.dark {
+  ion-content {
+    --background: #0f1724;
+  }
+
+  ion-card {
+    --background: #1a283f;
+    background: #1a283f;
+    border: none;
+    box-shadow: 2px 2px 7px #05080d;
+  }
+
+  ion-toolbar {
+    --background: #152133;
+  }
+
+  ion-tab-bar,
+  .custom-tab-bar {
+    --background: #152133;
+  }
+
+  ion-item {
+    --background: #1a283f;
+  }
+
+  ion-searchbar {
+    --background: #1a283f;
+    --box-shadow: none;
+    --border: none;
+  }
+
+  ion-list {
+    background: transparent;
+  }
+
+  /* Card borders */
+  .card-container ion-card,
+  .chat-list ion-item,
+  .activity-card {
+    border: none;
+    box-shadow: 2px 2px 7px #05080d;
+  }
+
+  /* Text adjustments */
+  .text-secondary,
+  .class-title,
+  ion-card-title {
+    color: #F1F3F5;
+  }
+
+  .text-normal,
+  ion-card-subtitle,
+  .class-subtitle {
+    color: #BFC9D1;
+  }
+
+  /* Comments section */
+  .comments-section {
+    background: #1a283f;
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .add-comment .comment-input {
+    --background: #152133;
+    border-color: transparent;
+  }
+
+  /* Scroll cards */
+  .scroll-card {
+    box-shadow: 2px 2px 7px #05080d;
+    border: none;
+  }
+
+  /* Popover */
+  ion-popover {
+    --background: #1a283f;
+
+    ion-item {
+      --background: transparent;
+
+      &:hover {
+        --background: rgba(255, 255, 255, 0.05);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   5. TYPOGRAPHY UTILITIES
+========================================================================== */
+
+.text {
+  font-family: "Segoe UI", sans-serif;
+  color: var(--ion-text-color);
+}
+
+.text-primary {
+  @extend .text;
+  font-size: 26px;
+  font-weight: 750;
+}
+
+.text-secondary {
+  @extend .text;
+  font-size: 20px;
+  font-weight: 650;
+}
+
+.text-normal {
+  @extend .text;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+/* ==========================================================================
+   6. COMPONENT STYLES
+========================================================================== */
+
+/* ----- Cards ----- */
+ion-card {
+  width: 100%;
+  max-width: 700px;
+  border-radius: var(--app-card-radius);
+  border: solid 1px var(--app-border-color);
+  margin: 0;
+  color: var(--ion-text-color);
+}
+
+/* Card Container */
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 0 10px;
+  margin: 10px 0 20px 0;
+}
+
+/* ----- Circular Card Buttons ----- */
+.card-button {
+  --color: #707070;
+  --background: transparent;
+  --ripple-color: #CE7C2A;
+  padding: 0;
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  --border-radius: 100%;
+  --ion-activatable: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark .card-button {
+  --color: #F1F3F5;
+}
+
+/* ----- Menu ----- */
+ion-menu {
+  --background: var(--ion-background-color);
+  --width: 80%;
+}
+
+ion-menu ion-toolbar {
+  --background: var(--ion-toolbar-background);
+  --color: var(--ion-text-color);
+  font-weight: 700;
+  font-size: 22px;
+  box-shadow: none;
+}
+
+ion-menu ion-item {
+  --background: transparent;
+  --color: var(--ion-text-color);
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  border-bottom: solid 1px #e3e3e3;
+  margin: 4px 8px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  ion-icon {
+    font-size: 24px;
+    color: var(--ion-color-primary);
+    margin-right: 12px;
+  }
+}
+
+.dark ion-menu ion-item {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   7. LAYOUT UTILITIES
+========================================================================== */
+
+.stickyheader {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  background: var(--ion-background-color);
+}
+
+/* ==========================================================================
+   END
+========================================================================== */

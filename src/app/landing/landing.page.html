@@ -1,0 +1,32 @@
+<ion-content class="landing-page" fullscreen>
+  <div class="landing-container">
+
+    <!-- Logo / Illustration -->
+    <div class="logo-container">
+      <ion-img class="logo" src="assets/studynest.svg"></ion-img>
+    </div>
+
+    <!-- Slogan / Tagline -->
+    <div class="text-section">
+      <ion-text color="primary">
+        <h1 class="slogan">Your Digital Nest for Learning</h1>
+      </ion-text>
+      <p class="subtext">
+        The place to hatch your potential. Here you can grow, learn, and explore new opportunities every day. 
+        Find your path, connect with others, and take small steps toward big goals. 
+        This is the place where your ideas take flight and your skills get stronger.
+      </p>
+    </div>
+
+    <!-- Call-to-Action Buttons -->
+    <div class="cta-container">
+      <ion-button class="landing-btn" expand="block" (click)="goToSignup()">
+        Get Started
+      </ion-button>
+
+      <ion-button class="sign-in-btn" fill="outline" expand="block" (click)="goToLogin()">
+        Sign In
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

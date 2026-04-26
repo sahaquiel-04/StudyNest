@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Create Assignment</ion-title>
+    <ion-buttons slot="end">
+      <ion-button 
+        (click)="createAssignment()" 
+        [strong]="true"
+        [disabled]="!isFormValid()">
+        Create
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <!-- Assignment Title -->
+    <ion-item lines="full">
+      <ion-label position="stacked">Title *</ion-label>
+      <ion-input
+        [(ngModel)]="assignmentTitle"
+        placeholder="Enter assignment title"
+        maxlength="100">
+      </ion-input>
+    </ion-item>
+
+    <!-- Assignment Description -->
+    <ion-item lines="full">
+      <ion-label position="stacked">Description *</ion-label>
+      <ion-textarea
+        [(ngModel)]="assignmentDescription"
+        placeholder="Enter assignment description and instructions"
+        [autoGrow]="true"
+        rows="6">
+      </ion-textarea>
+    </ion-item>
+
+    <!-- Due Date -->
+    <ion-item lines="full">
+      <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
+      <ion-label position="stacked">Due Date *</ion-label>
+      <ion-datetime-button datetime="due-date"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime
+            id="due-date"
+            [(ngModel)]="dueDate"
+            [min]="minDate"
+            [max]="maxDate"
+            presentation="date-time"
+            [showDefaultButtons]="true">
+          </ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <!-- Show formatted due date -->
+    <ion-item lines="none" *ngIf="dueDate">
+      <ion-label>
+        <ion-note color="medium">Due: {{ formatDueDate() }}</ion-note>
+      </ion-label>
+    </ion-item>
+
+    <!-- Total Points -->
+    <ion-item lines="full">
+      <ion-label position="stacked">Total Points *</ion-label>
+      <ion-input
+        type="number"
+        [(ngModel)]="totalPoints"
+        placeholder="Enter total points"
+        min="1"
+        max="1000">
+      </ion-input>
+    </ion-item>
+
+    <!-- Attachments Section -->
+    <ion-item lines="none" class="section-header">
+      <ion-label>
+        <h3>Attachments</h3>
+      </ion-label>
+    </ion-item>
+
+    <!-- Attach File Button -->
+    <ion-item lines="none" button (click)="attachFile()">
+      <ion-icon name="attach-outline" slot="start" color="primary"></ion-icon>
+      <ion-label color="primary">Add Attachment</ion-label>
+    </ion-item>
+
+    <!-- Attachments List -->
+    <div class="attachments-list" *ngIf="attachments.length > 0">
+      <ion-chip 
+        *ngFor="let attachment of attachments"
+        color="primary"
+        outline="true">
+        <ion-label>{{ attachment.name }}</ion-label>
+        <ion-icon 
+          name="close-circle-outline" 
+          (click)="removeAttachment(attachment.id)">
+        </ion-icon>
+      </ion-chip>
+    </div>
+  </ion-list>
+
+  <!-- Help Text -->
+  <div class="help-text">
+    <ion-note color="medium">
+      * Required fields. Students will be able to view this assignment and submit their work.
+    </ion-note>
+  </div>
+</ion-content>

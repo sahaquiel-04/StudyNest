@@ -1,0 +1,149 @@
+<ion-card 
+  class="activity-card clickable-card" 
+  [ngClass]="{'assignment-card': isAssignment(activity), 'announcement-card': isAnnouncement(activity)}"
+  (click)="onCardClick($event)"
+>
+  <ion-card-header>
+    <div class="activity-header">
+      <ion-avatar class="activity-avatar">
+        <img [src]="activity.authorAvatar" [alt]="activity.author">
+      </ion-avatar>
+      <div class="activity-info">
+        <div class="title-row">
+          <ion-card-title class="activity-title">{{ activity.title }}</ion-card-title>
+        </div>
+        <ion-card-subtitle class="activity-meta">
+          {{ activity.author }} • {{ activity.date | date:'MMM d, y' }}
+        </ion-card-subtitle>
+        <ion-chip *ngIf="isAssignment(activity)" [color]="getStatusColor(activity.status)" class="status-chip">
+          <ion-icon [name]="getStatusIcon(activity.status)"></ion-icon>
+          <ion-label>{{ getStatusText(activity.status) }}</ion-label>
+        </ion-chip>
+      </div>
+    </div>
+  </ion-card-header>
+  
+  <ion-card-content>
+    <p class="description">{{ activity.description }}</p>
+    
+    <!-- Assignment specific info -->
+    <div *ngIf="isAssignment(activity)" class="assignment-details">
+      <div class="detail-row due-date" [ngClass]="{'overdue': isOverdue(activity)}">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span>Due: {{ activity.dueDate | date:'MMM d, y, h:mm a' }}</span>
+      </div>
+    </div>
+
+    <!-- Attachments (for both types) -->
+    <div *ngIf="activity.attachments && activity.attachments.length > 0" class="attachments-section">
+      <div class="attachments-header">
+        <span>{{ activity.attachments.length }} {{ activity.attachments.length === 1 ? 'Attachment' : 'Attachments' }}</span>
+      </div>
+
+      <div class="attachments-list">
+        <div *ngFor="let attachment of activity.attachments" class="attachment-item">
+          <ion-icon src="assets/file.svg" class="attachment-icon"></ion-icon>
+          <div class="attachment-info">
+            <span class="attachment-name">{{ attachment.name }}</span>
+            <span class="attachment-meta">{{ attachment.type }} • {{ attachment.size }}</span>
+          </div>
+          <ion-button 
+            fill="clear" 
+            class="download-btn"
+            (click)="onAttachmentClick(attachment, $event)">
+            <ion-icon name="download-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </ion-card-content>
+
+  <!-- Comments Section -->
+  <div class="comments-section">
+    <!-- Comments Header - Clickable to expand -->
+    <div 
+      *ngIf="activity.comments && activity.comments.length > 0" 
+      class="comments-header clickable"
+      (click)="openCommentsModal(); $event.stopPropagation()">
+      <ion-icon name="chatbubble-outline"></ion-icon>
+      <span>{{ activity.comments.length }} {{ activity.comments.length === 1 ? 'Comment' : 'Comments' }}</span>
+      <ion-icon name="chevron-forward-outline" class="expand-icon"></ion-icon>
+    </div>
+
+    <!-- Add Comment Input -->
+    <div class="add-comment" (click)="$event.stopPropagation()">
+      <ion-avatar class="user-avatar">
+        <img [src]="currentUserAvatar" alt="You">
+      </ion-avatar>
+      <ion-input
+        [(ngModel)]="activity.newComment"
+        placeholder="Add a comment..."
+        class="comment-input"
+        (keyup.enter)="addComment($event)"
+        (click)="$event.stopPropagation()"
+      ></ion-input>
+      <ion-button 
+        fill="clear" 
+        (click)="addComment($event)"
+        [disabled]="!activity.newComment?.trim()"
+        class="send-comment-btn"
+      >
+        <ion-icon name="send" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-card>
+
+<!-- Comments Modal -->
+<ion-modal [isOpen]="isCommentsModalOpen" (didDismiss)="closeCommentsModal()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Comments</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeCommentsModal()">
+            <ion-icon name="close" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content class="comments-modal-content">
+      <div class="modal-comments-list">
+        <div *ngFor="let comment of activity.comments" class="comment-item">
+          <ion-avatar class="comment-avatar">
+            <img [src]="comment.authorAvatar || 'assets/profile.svg'" [alt]="comment.author">
+          </ion-avatar>
+          <div class="comment-content">
+            <div class="comment-header">
+              <span class="comment-author">{{ comment.author }}</span>
+              <span class="comment-date">{{ comment.date | date:'MMM d, h:mm a' }}</span>
+            </div>
+            <p class="comment-text">{{ comment.text }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Comment in Modal -->
+      <div class="modal-add-comment">
+        <ion-avatar class="user-avatar">
+          <img [src]="currentUserAvatar" alt="You">
+        </ion-avatar>
+        <ion-input
+          [(ngModel)]="activity.newComment"
+          placeholder="Add a comment..."
+          class="comment-input"
+          (keyup.enter)="addComment($event)"
+        ></ion-input>
+        <ion-button 
+          fill="clear" 
+          (click)="addComment($event)"
+          [disabled]="!activity.newComment?.trim()"
+          class="send-comment-btn"
+        >
+          <ion-icon name="send" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
