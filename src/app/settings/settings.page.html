@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Settings</ion-title>
   </ion-toolbar>
@@ -10,6 +10,14 @@
 <ion-content [fullscreen]="true">
   <ion-item>
   <ion-label>Dark Mode</ion-label>
-  <ion-toggle (ionChange)="toggleDarkMode()"></ion-toggle>
+  <ion-toggle [checked]="darkMode" (ionChange)="toggleDarkMode($event)"></ion-toggle>
   </ion-item>
+  <ion-item>
+    <ion-label>Email notifications</ion-label>
+    <ion-toggle [checked]="emailNotifications" (ionChange)="toggleEmailNotifications($event)"></ion-toggle>
+  </ion-item>
+
+  <div style="padding:16px;">
+    <ion-button expand="block" color="danger" (click)="logout()">Log out</ion-button>
+  </div>
 </ion-content>
