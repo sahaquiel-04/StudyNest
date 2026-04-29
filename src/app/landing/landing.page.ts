@@ -17,15 +17,24 @@ import { IonContent, IonImg, IonText, IonGrid,
   ]
 })
 export class LandingPage implements OnInit {
+  isLeaving = false;
 
   constructor(private router: Router) {}
 
   goToSignup() {
-    this.router.navigate(['/auth/register']);
+    this.navigateWithTransition(['/auth/register']);
   }
 
   goToLogin() {
-    this.router.navigate(['/auth/login']);
+    this.navigateWithTransition(['/auth/login']);
+  }
+
+  private navigateWithTransition(commands: string[]) {
+    if (this.isLeaving) return;
+    this.isLeaving = true;
+    window.setTimeout(() => {
+      this.router.navigate(commands);
+    }, 220);
   }
 
   ngOnInit() {

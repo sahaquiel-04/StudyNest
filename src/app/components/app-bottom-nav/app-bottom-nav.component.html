@@ -1,0 +1,16 @@
+<ion-tab-bar class="custom-tab-bar">
+  <ion-tab-button (click)="navigateTo('/home')" [class.active]="currentRoute === 'home'">
+    <ion-icon aria-hidden="true" src="assets/home.svg"></ion-icon>
+    <ion-label>Home</ion-label>
+  </ion-tab-button>
+
+  <ion-tab-button (click)="navigateTo('/classes')" [class.active]="currentRoute === 'classes'">
+    <ion-icon aria-hidden="true" src="assets/class.svg"></ion-icon>
+    <ion-label>Classes</ion-label>
+  </ion-tab-button>
+
+  <ion-tab-button (click)="navigateTo('/chat')" [class.active]="currentRoute === 'chat'">
+    <ion-icon aria-hidden="true" src="assets/chat.svg"></ion-icon>
+    <ion-label>Chat</ion-label>
+  </ion-tab-button>
+</ion-tab-bar>

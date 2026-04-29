@@ -2,10 +2,15 @@
    Layout & Container
    =========================== */
 .login-page {
-  --ion-background-color: #ffffff;
+  --background: var(--ion-background-color);
+  --ion-background-color: var(--ion-background-color);
+  --color: var(--ion-text-color);
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100vh;
+  background: var(--ion-background-color);
+  color: var(--ion-text-color);
 }
 
 .login-container {
@@ -14,19 +19,31 @@
   margin: 0 auto;
   padding: 36px 16px;
   text-align: center;
+  color: var(--ion-text-color);
 }
 
-/* ===========================
-   Images
-   =========================== */
-ion-img {
-  height: 120px;
-  padding: 20px;
-}
-
-.logo-container{
+.logo-container {
   display: flex;
+  align-items: center;
   justify-content: center;
+  gap: 5px;
+  margin-bottom: 18px;
+}
+
+.brand-mark {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+}
+
+.brand-name {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--ion-text-color);
 }
 
 /* ===========================
@@ -36,11 +53,11 @@ ion-img {
   font-size: 28px;
   font-weight: 600;
   margin: 6px 0 4px;
-  color: #EE9D4E;
+  color: var(--ion-color-primary);
 }
 
 .subtitle {
-  color: #b9b9b9;
+  color: var(--ion-color-medium);
   margin-bottom: 20px;
 }
 
@@ -54,11 +71,12 @@ ion-item {
 }
 
 .input-item {
-  border: solid 1px #b0b0b0;
+  border: solid 1px var(--app-border-color);
   border-radius: 12px;
   margin: 10px 0;
   padding: 6px 12px;
-  --background: transparent;
+  --background: var(--ion-item-background);
+  --color: var(--ion-text-color);
   overflow: hidden;
 }
 
@@ -67,7 +85,7 @@ ion-item {
    =========================== */
 .error-text {
   margin-top: 6px;
-  color: #EE9D4E;
+  color: var(--ion-color-danger);
   font-size: 0.85rem;
   text-align: left;
   padding-left: 8px;
@@ -85,6 +103,7 @@ ion-item {
    =========================== */
 .sign-in {
   --border-radius: 50px;
+  --background: var(--ion-color-primary);
   --color: #fff;
   margin-top: 6px;
   height: 48px;
@@ -95,14 +114,15 @@ ion-item {
    Links
    =========================== */
 .remember-row {
-  --ion-background-color: transparent;
+  --background: transparent;
+  --color: var(--ion-text-color);
   justify-content: flex-start;
   align-items: center;
   margin: 8px 0 18px;
 }
 
 .signup-link {
-  color: #6b7280;
+  color: var(--ion-color-medium);
   margin-top: 18px;
   font-size: 14px;
 }
@@ -111,62 +131,13 @@ ion-item {
   cursor: pointer;
   text-decoration: none;
   font-weight: 600;
-  color: #EE9D4E;
+  color: var(--ion-color-primary);
 }
 
-/* ===========================
-   Dark Mode
-   =========================== */
 .dark .login-page {
-  --ion-background-color: #0f1724;
-}
-
-.dark .login-container {
-  color: #e6eefc;
-}
-
-.dark .title {
-  color: #EE9D4E;
-}
-
-.dark .subtitle,
-.dark .signup-link,
-.dark .remember-row {
-  color: #9aa6b2;
+  background: var(--ion-background-color);
 }
 
 .dark .input-item {
-  --background: transparent;
-}
-
-.dark .sign-in {
-  --background: #EE9D4E;
-  --color: #0b1220;
-}
-
-/* ===========================
-   System Dark Mode
-   =========================== */
-@media (prefers-color-scheme: dark) {
-  .login-page {
-    --ion-background-color: #0f1724;
-  }
-  .login-container {
-    color: #e6eefc;
-  }
-  .title {
-    color: #EE9D4E;
-  }
-  .subtitle,
-  .signup-link,
-  .remember-row {
-    color: #9aa6b2;
-  }
-  .input-item {
-    --background: #0b1220;
-  }
-  .sign-in {
-    --background: #fb923c;
-    --color: #0b1220;
-  }
+  --background: var(--ion-item-background);
 }

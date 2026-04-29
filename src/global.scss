@@ -25,8 +25,8 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/* Dark mode auto system preference */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* Dark mode is controlled by the app's toggle using the `.dark` class */
+@import '@ionic/angular/css/palettes/dark.class.css';
 
 /* ==========================================================================
    2. IONIC COLOR SYSTEM
@@ -120,7 +120,7 @@
   --ion-tab-bar-background: #ffffff;
 
   /* Text colors */
-  --ion-text-color: #707070;
+  --ion-text-color: #333333;
 
   /* Custom accents */
   --app-border-color: #d3d3d3;
@@ -151,19 +151,22 @@
   --ion-color-light-contrast: #ffffff;
 }
 
-/* Logo switching */
-.logo {
-  content: url('assets/studynest.svg');
+/* Tweak semantic medium color for readable subtext in light mode */
+:root {
+  --ion-color-medium: #8a8a8a;
 }
 
-.dark .logo {
-  content: url('assets/studynest-dark.svg');
+/* Logo switching controlled by the app's .dark class */
+.logo-dark {
+  display: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    content: url('assets/studynest-dark.svg');
-  }
+:root.dark .logo-light {
+  display: none;
+}
+
+:root.dark .logo-dark {
+  display: block;
 }
 
 /* ==========================================================================

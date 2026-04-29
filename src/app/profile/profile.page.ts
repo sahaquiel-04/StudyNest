@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonRouterOutlet } from '@ionic/angular/standalone';
 
@@ -87,7 +87,8 @@ export class ProfilePage implements OnInit {
   constructor(
     private auth: AuthService,
     private router: Router,
-    public routerOutlet: IonRouterOutlet
+    public routerOutlet: IonRouterOutlet,
+    private location: Location
   ) {
     addIcons({
       chevronBackOutline,
@@ -100,6 +101,10 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  goBack() {
+    this.location.back();
+  }
+
   ngOnInit() {
     this.username = localStorage.getItem('last_user');
     this.loadProfile();
@@ -107,9 +112,9 @@ export class ProfilePage implements OnInit {
     const saved = localStorage.getItem('dark_mode');
     if (saved !== null) {
       this.darkMode = saved === '1';
-      document.body.classList.toggle('dark', this.darkMode);
+      document.documentElement.classList.toggle('dark', this.darkMode);
     } else {
-      this.darkMode = document.body.classList.contains('dark');
+      this.darkMode = document.documentElement.classList.contains('dark');
     }
   }
 
@@ -120,7 +125,7 @@ export class ProfilePage implements OnInit {
 
   toggleDarkMode(ev: CustomEvent) {
     this.darkMode = !!ev?.detail?.checked;
-    document.body.classList.toggle('dark', this.darkMode);
+    document.documentElement.classList.toggle('dark', this.darkMode);
     localStorage.setItem('dark_mode', this.darkMode ? '1' : '0');
   }
 
@@ -177,7 +182,7 @@ export class ProfilePage implements OnInit {
   }
 
   goHome() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/settings']);
   }
 
   logout() {

@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { 
   IonContent, IonHeader, IonToolbar, IonTitle, IonList, IonItem, IonRow,
-  IonButton, IonCol, IonIcon, IonCard, IonCardContent, IonCardHeader, 
+  IonButton, IonButtons, IonCol, IonIcon, IonCard, IonCardContent, IonCardHeader, 
   IonCardTitle, IonCardSubtitle, IonPopover, IonLabel,
+  IonMenuButton,
   ModalController, AlertController, ToastController
 } from '@ionic/angular/standalone';
+import { AppBottomNavComponent } from '../components/app-bottom-nav/app-bottom-nav.component';
 import { ActionSheetController } from '@ionic/angular';
 import { RouterModule, Router } from '@angular/router';
 import { addIcons } from 'ionicons';
@@ -40,6 +42,7 @@ import { CreateClassModalComponent } from '../components/create-class-modal/crea
     IonItem,
     IonRow,
     IonButton,
+    IonButtons,
     IonCol,
     IonIcon,
     IonCard,
@@ -49,6 +52,8 @@ import { CreateClassModalComponent } from '../components/create-class-modal/crea
     IonCardSubtitle,
     IonPopover,
     IonLabel,
+    IonMenuButton,
+    AppBottomNavComponent,
   ],
 })
 export class Tab2Page implements OnInit, OnDestroy {
