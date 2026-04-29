@@ -24,9 +24,16 @@ export const routes: Routes = [
       import('./auth/register.page').then((m) => m.RegisterPage),
   },
   {
-    path: 'tabs',
-    loadChildren: () =>
-      import('./tabs/tabs.routes').then((m) => m.routes),
+    path: 'home',
+    loadComponent: () => import('./tab1/tab1.page').then((m) => m.Tab1Page),
+  },
+  {
+    path: 'classes',
+    loadComponent: () => import('./tab2/tab2.page').then((m) => m.Tab2Page),
+  },
+  {
+    path: 'chat',
+    loadComponent: () => import('./tab3/tab3.page').then((m) => m.Tab3Page),
   },
   {
     path: 'class/:id',  // Changed to accept class ID
@@ -44,6 +51,10 @@ export const routes: Routes = [
   {
     path: 'profile',
     loadComponent: () => import('./profile/profile.page').then( m => m.ProfilePage)
+  },
+  {
+    path: 'settings',
+    loadComponent: () => import('./settings/settings.page').then((m) => m.SettingsPage),
   },
   {
     path: 'announcement-detail',

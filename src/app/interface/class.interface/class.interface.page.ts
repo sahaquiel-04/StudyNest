@@ -171,7 +171,7 @@ export class ClassInterfacePage implements OnInit {
     
     if (!classData) {
       // Class not found, navigate back
-      this.router.navigate(['/tabs/tab2']);
+      this.router.navigate(['/classes']);
       return;
     }
 
@@ -238,7 +238,7 @@ export class ClassInterfacePage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/tabs/tab2']);
+    this.router.navigate(['/classes']);
   }
 
   downloadMaterial(material: Material) {
@@ -555,7 +555,7 @@ private async showToast(message: string, color: string) {
     });
     await toast.present();
 
-    this.router.navigate(['/tabs/tab2']);
+    this.router.navigate(['/classes']);
   }
 
   private async confirmLeaveClass() {
@@ -592,7 +592,7 @@ private async showToast(message: string, color: string) {
       });
       await toast.present();
 
-      this.router.navigate(['/tabs/tab2']);
+      this.router.navigate(['/classes']);
     }
   }
 }

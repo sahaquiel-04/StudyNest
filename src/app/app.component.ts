@@ -36,15 +36,18 @@ export class AppComponent {
     private router: Router,
     private menuCtrl: MenuController
   ) {
+    const saved = localStorage.getItem('dark_mode');
+    if (saved !== null) {
+      this.applyDarkMode(saved === '1');
+      return;
+    }
+
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     this.applyDarkMode(prefersDark.matches);
-    prefersDark.addEventListener('change', (event) => {
-      this.applyDarkMode(event.matches);
-    });
   }
 
   private applyDarkMode(isDark: boolean) {
-    document.body.classList.toggle('dark', isDark);
+    document.documentElement.classList.toggle('dark', isDark);
   }
 
   async navigateToProfile() {
@@ -53,7 +56,7 @@ export class AppComponent {
   }
 
   async navigateToHome() {
-    await this.router.navigate(['/tabs/tab1']);
+    await this.router.navigate(['/home']);
     this.menuCtrl.close('main-menu');
   }
 

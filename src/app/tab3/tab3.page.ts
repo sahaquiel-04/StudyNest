@@ -16,9 +16,11 @@ import {
   IonIcon,
   IonButton,
   IonButtons,
+  IonMenuButton,
   IonRow,
   IonCol,
 } from '@ionic/angular/standalone';
+import { AppBottomNavComponent } from '../components/app-bottom-nav/app-bottom-nav.component';
 import { addIcons } from 'ionicons';
 import {
   chatbubblesOutline,
@@ -61,8 +63,10 @@ interface Chat {
     IonIcon,
     IonButton,
     IonButtons,
+    IonMenuButton,
     IonRow,
     IonCol,
+    AppBottomNavComponent,
   ],
 })
 export class Tab3Page implements OnInit {

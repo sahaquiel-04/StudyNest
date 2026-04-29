@@ -1,0 +1,19 @@
+.custom-tab-bar {
+  --background: var(--ion-toolbar-background);
+  --color: var(--ion-text-color);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-tab-bar ion-tab-button {
+  --color: var(--ion-color-medium);
+  --color-selected: var(--ion-color-primary);
+}
+
+.custom-tab-bar ion-tab-button.active {
+  --color-selected: var(--ion-color-primary);
+}
+
+.dark .custom-tab-bar {
+  --background: var(--ion-toolbar-background);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+}

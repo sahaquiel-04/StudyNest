@@ -1,9 +1,14 @@
 
 .register-page {
-  --ion-background-color: #ffffff;
+  --background: var(--ion-background-color);
+  --ion-background-color: var(--ion-background-color);
+  --color: var(--ion-text-color);
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100vh;
+  background: var(--ion-background-color);
+  color: var(--ion-text-color);
 }
 
 .register-container {
@@ -12,36 +17,52 @@
   margin: 0 auto;
   padding: 36px 16px;
   text-align: center;
+  color: var(--ion-text-color);
 }
 
 
-ion-img {
-  height: 100px;
-  padding: 20px;
-}
-
-.logo-container{
+.logo-container {
   display: flex;
+  align-items: center;
   justify-content: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.brand-mark {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+}
+
+.brand-name {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--ion-text-color);
 }
  
 .title {
   font-size: 26px;
   font-weight: 600;
   margin: 6px 0 4px;
-  color: #EE9D4E;
+  color: var(--ion-color-primary);
 }
 
 .subtitle {
-  color: #6b7280;
+  color: var(--ion-color-medium);
   margin-bottom: 20px;
 }
 
 .input-item {
-  border: solid 1px #b0b0b0;
+  border: solid 1px var(--app-border-color);
   border-radius: 12px;
   margin: 10px 0;
-  --background: transparent;
+  --background: var(--ion-item-background);
+  --color: var(--ion-text-color);
   padding: 6px 12px;
 }
 
@@ -53,24 +74,26 @@ ion-item {
 
 .next-btn {
   --border-radius: 50px;
+  --background: var(--ion-color-primary);
+  --color: #ffffff;
   height: 48px;
 }
 
 .signin-link {
-  color: #6b7280;
+  color: var(--ion-color-medium);
   margin-top: 18px;
   font-size: 14px;
 }
 
 .signin-link a {
-  color: #EE9D4E;
+  color: var(--ion-color-primary);
   text-decoration: none;
   font-weight: 600;
 }
 
 .error-text {
   margin-top: 6px;
-  color: #EE9D4E;
+  color: var(--ion-color-danger);
   font-size: 0.85rem;
   text-align: left;
   padding-left: 8px;
@@ -89,57 +112,10 @@ ion-item {
   }
 }
 
-
 .dark .register-page {
-  --ion-background-color: #0f1724;
-}
-
-.dark .register-container {
-  color: #e6eefc;
-}
-
-.dark .title {
-  color: #EE9D4E;
-}
-
-.dark .subtitle,
-.dark .signin-link {
-  color: #9aa6b2;
+  background: var(--ion-background-color);
 }
 
 .dark .input-item {
-  --background: #0b1220;
-}
-
-.dark .sign-up {
-  --background: #fb923c;
-  --color: #0b1220;
-}
-
-@media (prefers-color-scheme: dark) {
-  .register-page {
-    --ion-background-color: #0f1724;
-  }
-
-  .register-container {
-    color: #e6eefc;
-  }
-
-  .title {
-    color: #EE9D4E;
-  }
-
-  .subtitle,
-  .signin-link {
-    color: #9aa6b2;
-  }
-
-  .input-item {
-    --background: #0b1220;
-  }
-
-  .sign-up {
-    --background: #fb923c;
-    --color: #0b1220;
-  }
+  --background: var(--ion-item-background);
 }

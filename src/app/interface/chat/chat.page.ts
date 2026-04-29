@@ -174,7 +174,7 @@ export class ChatPage implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate(['/tabs/tab3']);
+    this.router.navigate(['/chat']);
   }
 
   sendMessage() {

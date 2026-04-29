@@ -43,7 +43,7 @@ export class LoginPage {
 
   if (ok) {
     alert('Login successful');
-    this.router.navigateByUrl('/tabs/tab1');
+    this.router.navigateByUrl('/home');
   } else {
     this.errorMessage = 'Invalid email or password';
   }

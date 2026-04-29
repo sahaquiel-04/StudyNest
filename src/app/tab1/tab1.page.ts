@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
-  IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, 
+  IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonMenuButton,
   IonIcon, IonBadge, IonCard, IonCardContent, IonCardHeader, IonItem, 
   IonAvatar, IonLabel, IonInput, IonCardTitle, IonChip, IonCardSubtitle,
   ActionSheetController, ToastController,
 } from '@ionic/angular/standalone';
+import { AppBottomNavComponent } from '../components/app-bottom-nav/app-bottom-nav.component';
 import { addIcons } from 'ionicons';
 import {
   newspaperOutline,
@@ -52,6 +53,7 @@ interface GroupedActivities {
     IonContent,
     IonButtons,
     IonButton,
+    IonMenuButton,
     IonIcon,
     IonBadge,
     IonCard,
@@ -66,6 +68,7 @@ interface GroupedActivities {
     IonCardSubtitle,
     ActivityCardComponent,
     StatsOverviewComponent,
+    AppBottomNavComponent,
   ],
 })
 export class Tab1Page implements OnInit {
