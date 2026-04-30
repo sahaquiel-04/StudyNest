@@ -5,13 +5,13 @@
         <ion-icon name="close-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Create Assignment</ion-title>
+    <ion-title>{{ editMode ? 'Edit Assignment' : 'Create Assignment' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button 
         (click)="createAssignment()" 
         [strong]="true"
         [disabled]="!isFormValid()">
-        Create
+        {{ editMode ? 'Save' : 'Create' }}
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

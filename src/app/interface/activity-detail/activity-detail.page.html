@@ -1,149 +1,149 @@
-<!-- activity-detail.page.html -->
-<ion-content [fullscreen]="true">
-  
-  <!-- Header with back button and menu -->
-  <div class="detail-header">
-    <ion-button fill="clear" class="back-button" (click)="goBack()">
-      <ion-icon name="chevron-back-outline" slot="icon-only"></ion-icon>
-    </ion-button>
-    <ion-button fill="clear" class="menu-button">
+  <!-- activity-detail.page.html -->
+  <ion-content [fullscreen]="true">
+    
+    <!-- Header with back button and menu -->
+    <div class="detail-header">
+      <ion-button fill="clear" class="back-button" (click)="goBack()">
+        <ion-icon name="chevron-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+     <ion-button fill="clear" class="menu-button" (click)="openMenu()">
       <ion-icon name="ellipsis-vertical" slot="icon-only"></ion-icon>
     </ion-button>
-  </div>
-
-  <div class="activity-detail-container" *ngIf="activity">
-    
-    <!-- Title Section -->
-    <div class="title-section">
-      <h1 class="activity-title">{{ activity.title }}</h1>
-      <p class="due-date" *ngIf="isAssignment(activity)">
-        Due: {{ activity.dueDate | date:'EEEE h:mm a' }}
-      </p>
     </div>
 
-    <!-- Description Card -->
-      <p>{{ activity.description }}</p>
-
-    <!-- Attachments Section -->
-    <div class="attachments-section" *ngIf="activity.attachments && activity.attachments.length > 0">
-      <div class="attachment-item" *ngFor="let attachment of activity.attachments" (click)="downloadAttachment(attachment)">
-        <ion-icon src="assets/file.svg" class="file-icon"></ion-icon>
-        <span class="file-name">{{ attachment.name }}</span>
-      </div>
-    </div>
-
-    <!-- Your Work Card (for assignments only) -->
-    <div class="work-card" *ngIf="isAssignment(activity)">
-      <div class="work-header">
-        <h3>Your Work</h3>
-        <div class="status-message" *ngIf="activity.status === 'submitted'">
-        <ion-icon name="checkmark-circle" color="success"></ion-icon>
-        <span>Submitted</span>
-      </div>
-      </div>
+    <div class="activity-detail-container" *ngIf="activity">
       
+      <!-- Title Section -->
+      <div class="title-section">
+        <h1 class="activity-title">{{ activity.title }}</h1>
+        <p class="due-date" *ngIf="isAssignment(activity)">
+          Due: {{ activity.dueDate | date:'EEEE h:mm a' }}
+        </p>
+      </div>
 
-      <!-- Submitted Files -->
-      <div class="submitted-files" *ngIf="submittedFiles.length > 0">
-        <div class="file-item" *ngFor="let file of submittedFiles">
+      <!-- Description Card -->
+        <p>{{ activity.description }}</p>
+
+      <!-- Attachments Section -->
+      <div class="attachments-section" *ngIf="activity.attachments && activity.attachments.length > 0">
+        <div class="attachment-item" *ngFor="let attachment of activity.attachments" (click)="downloadAttachment(attachment)">
           <ion-icon src="assets/file.svg" class="file-icon"></ion-icon>
-          <div class="file-info">
-            <span class="file-name">{{ file.name }}</span>
-            <span class="file-meta">{{ file.type }} • {{ file.size }}</span>
+          <span class="file-name">{{ attachment.name }}</span>
+        </div>
+      </div>
+
+      <!-- Your Work Card (for assignments only) -->
+      <div class="work-card" *ngIf="isAssignment(activity)">
+        <div class="work-header">
+          <h3>Your Work</h3>
+          <div class="status-message" *ngIf="activity.status === 'submitted'">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          <span>Submitted</span>
+        </div>
+        </div>
+        
+
+        <!-- Submitted Files -->
+        <div class="submitted-files" *ngIf="submittedFiles.length > 0">
+          <div class="file-item" *ngFor="let file of submittedFiles">
+            <ion-icon src="assets/file.svg" class="file-icon"></ion-icon>
+            <div class="file-info">
+              <span class="file-name">{{ file.name }}</span>
+              <span class="file-meta">{{ file.type }} • {{ file.size }}</span>
+            </div>
+            <ion-button fill="clear" size="small" (click)="removeFile(file)" *ngIf="canSubmit">
+              <ion-icon name="close-circle-outline" slot="icon-only"></ion-icon>
+            </ion-button>
           </div>
-          <ion-button fill="clear" size="small" (click)="removeFile(file)" *ngIf="canSubmit">
-            <ion-icon name="close-circle-outline" slot="icon-only"></ion-icon>
+        </div>
+
+        <!-- Attach Files Button -->
+        <ion-button 
+          expand="block" 
+          fill="clear" 
+          class="attach-button"
+          (click)="attachFile()"
+          *ngIf="canSubmit">
+          <ion-icon src="assets/add.svg" slot="start"></ion-icon>
+          Attach Files
+        </ion-button>
+
+        <!-- Turn In Button -->
+        <ion-button 
+          expand="block" 
+          color="primary" 
+          class="turn-in-button"
+          (click)="turnInAssignment()"
+          *ngIf="canSubmit"
+          [disabled]="submittedFiles.length === 0">
+          Turn In
+        </ion-button>
+
+        <!-- Unsubmit Button -->
+        <ion-button 
+          expand="block" 
+          fill="outline" 
+          color="medium"
+          class="unsubmit-button"
+          (click)="unsubmitAssignment()"
+          *ngIf="canUnsubmit">
+          Unsubmit
+        </ion-button>
+        
+
+        <!-- Add Comment -->
+        <div class="comment-input-container">
+          <ion-input
+            [(ngModel)]="newComment"
+            placeholder="Add Comment"
+            class="comment-input"
+            (keyup.enter)="addComment()">
+          </ion-input>
+          <ion-button 
+            fill="clear" 
+            (click)="addComment()"
+            [disabled]="!newComment?.trim()"
+            class="send-button">
+            <ion-icon name="send" slot="icon-only"></ion-icon>
           </ion-button>
         </div>
       </div>
 
-      <!-- Attach Files Button -->
-      <ion-button 
-        expand="block" 
-        fill="clear" 
-        class="attach-button"
-        (click)="attachFile()"
-        *ngIf="canSubmit">
-        <ion-icon src="assets/add.svg" slot="start"></ion-icon>
-        Attach Files
-      </ion-button>
-
-      <!-- Turn In Button -->
-      <ion-button 
-        expand="block" 
-        color="primary" 
-        class="turn-in-button"
-        (click)="turnInAssignment()"
-        *ngIf="canSubmit"
-        [disabled]="submittedFiles.length === 0">
-        Turn In
-      </ion-button>
-
-      <!-- Unsubmit Button -->
-      <ion-button 
-        expand="block" 
-        fill="outline" 
-        color="medium"
-        class="unsubmit-button"
-        (click)="unsubmitAssignment()"
-        *ngIf="canUnsubmit">
-        Unsubmit
-      </ion-button>
-      
-
-      <!-- Add Comment -->
-      <div class="comment-input-container">
-        <ion-input
-          [(ngModel)]="newComment"
-          placeholder="Add Comment"
-          class="comment-input"
-          (keyup.enter)="addComment()">
-        </ion-input>
-        <ion-button 
-          fill="clear" 
-          (click)="addComment()"
-          [disabled]="!newComment?.trim()"
-          class="send-button">
-          <ion-icon name="send" slot="icon-only"></ion-icon>
-        </ion-button>
-      </div>
-    </div>
-
-    <!-- Comments Section (for announcements) -->
-    <div class="comments-card" *ngIf="!isAssignment(activity)">
-      <div class="comments-list" *ngIf="activity.comments && activity.comments.length > 0">
-        <div class="comment-item" *ngFor="let comment of activity.comments">
-          <ion-avatar class="comment-avatar">
-            <img [src]="comment.authorAvatar || 'assets/profile.svg'" [alt]="comment.author">
-          </ion-avatar>
-          <div class="comment-content">
-            <div class="comment-header">
-              <span class="comment-author">{{ comment.author }}</span>
-              <span class="comment-date">{{ comment.date | date:'MMM d, h:mm a' }}</span>
+      <!-- Comments Section (for announcements) -->
+      <div class="comments-card" *ngIf="!isAssignment(activity)">
+        <div class="comments-list" *ngIf="activity.comments && activity.comments.length > 0">
+          <div class="comment-item" *ngFor="let comment of activity.comments">
+            <ion-avatar class="comment-avatar">
+              <img [src]="comment.authorAvatar || 'assets/profile.svg'" [alt]="comment.author">
+            </ion-avatar>
+            <div class="comment-content">
+              <div class="comment-header">
+                <span class="comment-author">{{ comment.author }}</span>
+                <span class="comment-date">{{ comment.date | date:'MMM d, h:mm a' }}</span>
+              </div>
+              <p class="comment-text">{{ comment.text }}</p>
             </div>
-            <p class="comment-text">{{ comment.text }}</p>
           </div>
+        </div>
+
+        <!-- Add Comment -->
+        <div class="comment-input-container">
+          <ion-input
+            [(ngModel)]="newComment"
+            placeholder="Add Comment"
+            class="comment-input"
+            (keyup.enter)="addComment()">
+          </ion-input>
+          <ion-button 
+            fill="clear" 
+            (click)="addComment()"
+            [disabled]="!newComment?.trim()"
+            class="send-button">
+            <ion-icon name="send" slot="icon-only"></ion-icon>
+          </ion-button>
         </div>
       </div>
 
-      <!-- Add Comment -->
-      <div class="comment-input-container">
-        <ion-input
-          [(ngModel)]="newComment"
-          placeholder="Add Comment"
-          class="comment-input"
-          (keyup.enter)="addComment()">
-        </ion-input>
-        <ion-button 
-          fill="clear" 
-          (click)="addComment()"
-          [disabled]="!newComment?.trim()"
-          class="send-button">
-          <ion-icon name="send" slot="icon-only"></ion-icon>
-        </ion-button>
-      </div>
     </div>
 
-  </div>
-
-</ion-content>
+  </ion-content>

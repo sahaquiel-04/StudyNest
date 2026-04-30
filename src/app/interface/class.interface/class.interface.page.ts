@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 import {
   IonContent,
   IonHeader,
@@ -137,7 +138,8 @@ export class ClassInterfacePage implements OnInit {
     private popoverCtrl: PopoverController,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
-    private fileService: FileService
+    private fileService: FileService,
+    private authService: AuthService,
   ) {
     addIcons({
       arrowBackOutline,
@@ -161,10 +163,22 @@ export class ClassInterfacePage implements OnInit {
 
   ngOnInit() {
     this.classId = this.route.snapshot.paramMap.get('id') || '';
+    this.loadCurrentUser();
     if (this.classId) {
       this.loadClassData();
     }
   }
+
+  loadCurrentUser() {
+  const username = localStorage.getItem('last_user');
+  const profile = this.authService.getProfile(username);
+  if (profile) {
+    this.currentUser = {
+      name: profile.fullName || username?.split('@')[0] || 'User',
+      avatar: profile.avatar || 'assets/profile.svg'
+    };
+  }
+}
 
   loadClassData() {
     const classData = this.classService.getClassById(this.classId);
@@ -209,29 +223,38 @@ export class ClassInterfacePage implements OnInit {
     this.materials = this.classService.getMaterials(this.classId);
   }
 
-  loadClassmates() {
-    if (!this.classData) return;
+ loadClassmates() {
+  if (!this.classData) return;
 
-    this.classmates = [];
+  this.classmates = [];
 
-    // Add teacher
+  const currentUserId = this.classService.getCurrentUserId();
+
+  // If current user is the teacher, use currentUser info instead
+  const teacherName = this.classData.teacherId === currentUserId
+    ? this.currentUser.name
+    : this.classData.teacherName;
+
+  const teacherAvatar = this.classData.teacherId === currentUserId
+    ? this.currentUser.avatar
+    : this.classData.teacherAvatar;
+
+  this.classmates.push({
+    id: this.classData.teacherId,
+    name: teacherName,
+    avatar: teacherAvatar,
+    role: 'teacher'
+  });
+
+  this.classData.students.forEach(student => {
     this.classmates.push({
-      id: this.classData.teacherId,
-      name: this.classData.teacherName,
-      avatar: this.classData.teacherAvatar,
-      role: 'teacher'
+      id: student.userId,
+      name: student.name,
+      avatar: student.avatar,
+      role: 'student'
     });
-
-    // Add students
-    this.classData.students.forEach(student => {
-      this.classmates.push({
-        id: student.userId,
-        name: student.name,
-        avatar: student.avatar,
-        role: 'student'
-      });
-    });
-  }
+  });
+}
 
   segmentChanged(event: any) {
     this.selectedSegment = event.detail.value;

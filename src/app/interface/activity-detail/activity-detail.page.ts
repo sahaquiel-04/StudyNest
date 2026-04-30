@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { AuthService } from '../../auth/auth.service';
 import {
   IonContent,
   IonButton,
@@ -12,6 +13,7 @@ import {
   IonInput,
   AlertController,
   ToastController,
+  ActionSheetController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -20,6 +22,8 @@ import {
   checkmarkCircle,
   closeCircleOutline,
   send,
+  pencilOutline, 
+  trashOutline
 } from 'ionicons/icons';
 import { ClassService, Activity, Assignment, Comment } from '../../services/class.service';
 import { Attachment } from '../../components/activity-card/activity-card.component';
@@ -59,7 +63,10 @@ export class ActivityDetailPage implements OnInit {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private classService: ClassService,
-    private fileService: FileService
+    private fileService: FileService,
+    private actionSheetCtrl: ActionSheetController,
+    private authService: AuthService,
+
   ) {
     addIcons({
       chevronBackOutline,
@@ -67,15 +74,26 @@ export class ActivityDetailPage implements OnInit {
       checkmarkCircle,
       closeCircleOutline,
       send,
+      pencilOutline, 
+      trashOutline,
     });
   }
 
   ngOnInit() {
     this.activityId = this.route.snapshot.paramMap.get('activityId') || '';
     this.classId = this.route.snapshot.paramMap.get('id') || '';
-    console.log('Activity Detail - ClassID:', this.classId, 'ActivityID:', this.activityId);
+    this.loadCurrentUser();
     this.loadActivity();
   }
+
+  loadCurrentUser() {
+  const username = localStorage.getItem('last_user');
+  const profile = this.authService.getProfile(username);
+  if (profile) {
+    this.currentUserName = profile.fullName || profile.username || 'User';
+    this.currentUserAvatar = profile.avatar || 'assets/profile.svg';
+  }
+}
 
   loadActivity() {
     // Load from class service
@@ -351,4 +369,60 @@ export class ActivityDetailPage implements OnInit {
     if (!this.activity || !this.isAssignment(this.activity)) return false;
     return this.activity.status === 'submitted';
   }
+
+  async openMenu() {
+  const sheet = await this.actionSheetCtrl.create({
+    header: 'Options',
+    buttons: [
+      {
+        text: 'Edit',
+        icon: 'pencil-outline',
+        handler: () => {
+          // your edit logic here
+        }
+      },
+      {
+        text: 'Delete',
+        icon: 'trash-outline',
+        role: 'destructive',
+        handler: () => {
+         this.deleteActivity();
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }
+    ]
+  });
+  await sheet.present();
+}
+
+async deleteActivity() {
+  const alert = await this.alertCtrl.create({
+    header: 'Delete Activity',
+    message: 'Are you sure you want to delete this? This cannot be undone.',
+    buttons: [
+      { text: 'Cancel', role: 'cancel' },
+      {
+        text: 'Delete',
+        role: 'destructive',
+        handler: () => {
+          const success = this.classService.deleteActivity(this.classId, this.activityId);
+          if (success) {
+            this.goBack();
+          } else {
+            this.toastCtrl.create({
+              message: 'Failed to delete activity',
+              duration: 2000,
+              position: 'top',
+              color: 'danger'
+            }).then(t => t.present());
+          }
+        }
+      }
+    ]
+  });
+  await alert.present();
+}
 }

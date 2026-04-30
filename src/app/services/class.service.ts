@@ -434,4 +434,16 @@ export class ClassService {
   private generateId(): string {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
   }
+
+  deleteActivity(classId: string, activityId: string): boolean {
+    const classData = this.getClassById(classId);
+    if (!classData || !classData.activities) return false;
+
+    const index = classData.activities.findIndex(a => a.id === activityId);
+    if (index === -1) return false;
+
+    classData.activities.splice(index, 1);
+    this.classesSubject.next([...this.classesSubject.value]);
+    return true;
+  }
 }

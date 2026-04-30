@@ -36,7 +36,7 @@
           <ion-card-subtitle class="text-tertiary">{{ c.subtitle }}</ion-card-subtitle>
           <p>{{ c.name }}</p>
         </div>
-        <img [src]="c.avatar" alt="Avatar" class="avatar">
+       <img [src]="c.teacherAvatar || c.avatar || 'assets/profile.svg'" alt="Avatar" class="avatar">
       </ion-card-header>
       
       <ion-card-content>

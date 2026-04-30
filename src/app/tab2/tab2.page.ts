@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
+import { AuthService } from '../auth/auth.service';
 import { 
   IonContent, IonHeader, IonToolbar, IonTitle, IonList, IonItem, IonRow,
   IonButton, IonButtons, IonCol, IonIcon, IonCard, IonCardContent, IonCardHeader, 
@@ -62,6 +63,10 @@ export class Tab2Page implements OnInit, OnDestroy {
   popoverEvent: any;
   selectedIndex: number | null = null;
   private classesSubscription?: Subscription;
+  currentUser = {
+  name: 'User',
+  avatar: 'assets/profile.svg'
+};
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
@@ -69,7 +74,8 @@ export class Tab2Page implements OnInit, OnDestroy {
     private modalCtrl: ModalController,
     private classService: ClassService,
     private toastCtrl: ToastController,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
   ) {
     addIcons({ 
       schoolOutline, 
@@ -83,6 +89,7 @@ export class Tab2Page implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loadCurrentUser();
     // Subscribe to classes from the service
     this.classesSubscription = this.classService.classes$.subscribe(
       classes => {
@@ -133,19 +140,22 @@ export class Tab2Page implements OnInit, OnDestroy {
   }
 
   async openCreateClassModal() {
-    const modal = await this.modalCtrl.create({
-      component: CreateClassModalComponent,
-      cssClass: 'create-class-modal'
-    });
-
-    await modal.present();
-
-    const { data, role } = await modal.onWillDismiss();
-    
-    if (role === 'created' && data) {
-      console.log('Class created:', data);
+  const modal = await this.modalCtrl.create({
+    component: CreateClassModalComponent,
+    cssClass: 'create-class-modal',
+    componentProps: {
+      teacherName: this.currentUser.name,
+      teacherAvatar: this.currentUser.avatar
     }
+  });
+
+  await modal.present();
+
+  const { data, role } = await modal.onWillDismiss();
+  if (role === 'created' && data) {
+    console.log('Class created:', data);
   }
+}
 
   async joinClass() {
     const alert = await this.alertCtrl.create({
@@ -311,4 +321,16 @@ export class Tab2Page implements OnInit, OnDestroy {
     this.popoverOpen = false;
     await alert.present();
   }
+
+  loadCurrentUser() {
+  const username = localStorage.getItem('last_user');
+  const profile = this.authService.getProfile(username);
+  if (profile) {
+    this.currentUser = {
+      name: profile.fullName || username?.split('@')[0] || 'User',
+      avatar: profile.avatar || 'assets/profile.svg'
+    };
+  }
+}
+
 }

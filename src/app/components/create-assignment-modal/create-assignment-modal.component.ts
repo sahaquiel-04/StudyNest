@@ -4,6 +4,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FileService, FileAttachment } from '../../services/file.service';
 import {
   IonHeader,
   IonToolbar,
@@ -39,13 +40,7 @@ export interface AssignmentFormData {
   description: string;
   dueDate: Date;
   totalPoints: number;
-  attachments: Array<{
-    id: string;
-    name: string;
-    type: string;
-    size: string;
-    url: string;
-  }>;
+  attachments: FileAttachment[];
 }
 
 @Component({
@@ -79,25 +74,23 @@ export class CreateAssignmentModalComponent implements OnInit {
   @Input() classId!: string;
   @Input() authorName!: string;
   @Input() authorAvatar!: string;
+  @Input() editMode: boolean = false;
+ @Input() existingActivity?: any;
+
 
   assignmentTitle: string = '';
   assignmentDescription: string = '';
   dueDate: string = '';
   totalPoints: number = 100;
-  attachments: Array<{
-    id: string;
-    name: string;
-    type: string;
-    size: string;
-    url: string;
-  }> = [];
+  attachments: FileAttachment[] = [];
 
   minDate: string = '';
   maxDate: string = '';
 
   constructor(
     private modalCtrl: ModalController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private fileService: FileService,
   ) {
     addIcons({
       closeOutline,
@@ -110,7 +103,15 @@ export class CreateAssignmentModalComponent implements OnInit {
 
   ngOnInit() {
     this.initializeDates();
+
+    if (this.editMode && this.existingActivity) {
+    this.assignmentTitle = this.existingActivity.title;
+    this.assignmentDescription = this.existingActivity.description;
+    this.dueDate = new Date(this.existingActivity.dueDate).toISOString();
+    this.totalPoints = this.existingActivity.totalPoints || 100;
+    this.attachments = this.existingActivity.attachments || [];
   }
+}
 
   initializeDates() {
     const now = new Date();
@@ -132,31 +133,40 @@ export class CreateAssignmentModalComponent implements OnInit {
     this.modalCtrl.dismiss(null, 'cancel');
   }
 
-  async attachFile() {
-    // TODO: Implement actual file picker
-    // For now, simulate adding a file
-    const mockFile = {
-      id: Date.now().toString(),
-      name: `Document_${this.attachments.length + 1}.pdf`,
-      type: 'PDF',
-      size: '2.4 MB',
-      url: '#'
-    };
-    
-    this.attachments.push(mockFile);
-    
+async attachFile() {
+  try {
+    const selectedFiles = await this.fileService.pickFiles(true);
+
+    if (selectedFiles.length === 0) return;
+
+    this.attachments.push(...selectedFiles);
+
     const toast = await this.toastCtrl.create({
-      message: 'File attached',
+      message: `${selectedFiles.length} file(s) attached`,
       duration: 1500,
       position: 'bottom',
       color: 'success'
     });
     await toast.present();
+  } catch (error) {
+    console.error('Error attaching files:', error);
+    const toast = await this.toastCtrl.create({
+      message: 'Failed to attach files',
+      duration: 2000,
+      position: 'bottom',
+      color: 'danger'
+    });
+    await toast.present();
   }
+}
 
   removeAttachment(attachmentId: string) {
-    this.attachments = this.attachments.filter(a => a.id !== attachmentId);
+  const file = this.attachments.find(a => a.id === attachmentId);
+  if (file?.url) {
+    this.fileService.revokeFileUrl(file.url);
   }
+  this.attachments = this.attachments.filter(a => a.id !== attachmentId);
+}
 
   async createAssignment() {
     // Validation

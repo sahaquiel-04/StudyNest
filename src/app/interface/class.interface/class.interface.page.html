@@ -20,7 +20,7 @@
         <p class="class-instructor">{{ classData?.name }}</p>
       </div>
       <div class="class-avatar">
-        <img [src]="classData?.avatar" alt="Class Avatar">
+        <img [src]="classmates[0]?.avatar || classData?.teacherAvatar || 'assets/profile.svg'" alt="Teacher Avatar">
       </div>
     </div>
   </div>
@@ -60,25 +60,44 @@
     </div>
 
     <!-- Classmates Tab -->
-    <div *ngIf="selectedSegment === 'classmates'" class="classmates-content">
-      <ion-list>
-        <ion-item *ngFor="let classmate of classmates" lines="full">
-          <ion-avatar slot="start">
-            <img [src]="classmate.avatar" alt="{{ classmate.name }}">
-          </ion-avatar>
-          <ion-label>
-            <h2>{{ classmate.name }}</h2>
-            <p *ngIf="classmate.role === 'teacher'" class="role-badge">Teacher</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
+<div *ngIf="selectedSegment === 'classmates'" class="classmates-content">
+  
+  <!-- Teacher Profile Card -->
+  <div class="teacher-card" *ngIf="classmates.length > 0">
+  <div class="teacher-avatar-wrapper">
+    <img [src]="classmates[0].avatar" alt="{{ classmates[0].name }}" class="teacher-avatar">
+    <div class="teacher-badge">Teacher</div>
+  </div>
+  <div class="teacher-info">
+    <h2 class="teacher-name">{{ classmates[0].name }}</h2>
+    <p class="teacher-label">Class Instructor</p>
+  </div>
+</div>
 
-      <!-- Empty State -->
-      <div *ngIf="classmates.length === 0" class="empty-state">
-        <ion-icon name="person-outline" class="empty-icon"></ion-icon>
-        <p>No classmates yet</p>
-      </div>
-    </div>
+  <!-- Students Section -->
+  <div *ngIf="(classData?.students?.length ?? 0) === 0" class="empty-state">
+    <p class="section-label">Students · {{ classData?.students?.length }}</p>
+    <ion-list>
+      <ion-item 
+        *ngFor="let classmate of classmates | slice:1" 
+        lines="full">
+        <ion-avatar slot="start">
+          <img [src]="classmate.avatar" alt="{{ classmate.name }}">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ classmate.name }}</h2>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Empty State (no students yet) -->
+  <div *ngIf="classData?.students?.length === 0" class="empty-state">
+    <ion-icon name="person-outline" class="empty-icon"></ion-icon>
+    <p>No students yet</p>
+  </div>
+
+</div>
 
     <!-- Materials Tab -->
     <div *ngIf="selectedSegment === 'materials'" class="materials-content">

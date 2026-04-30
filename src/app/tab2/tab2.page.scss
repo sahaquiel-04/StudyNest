@@ -25,10 +25,12 @@ ion-searchbar {
 }
 
 .avatar {
-  width: 70px;      // adjust size
+  width: 70px;    
   height: 70px;
-  border-radius: 50%; // makes it circular
-  object-fit: cover;  // ensures the image fills the circle
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  object-fit: cover;
   background-color: #f0f0f0;
 }
 

@@ -99,6 +99,8 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
+    object-fit: cover;        
+    object-position: center; 
     border: 3px solid var(--ion-background-color);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
@@ -262,4 +264,127 @@
 
 ion-content {
   --background: var(--ion-card-background);
+}
+
+/* Classmates Content */
+.classmates-content {
+
+  // ── Teacher Card ───────────────────────────────────
+  .teacher-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 0 16px;
+    padding: 16px;
+    background: var(--ion-card-background);
+    border-radius: var(--app-card-radius);
+    border: 1px solid var(--app-border-color);
+
+    .teacher-avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+
+      .teacher-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--ion-color-primary);
+      }
+
+      .teacher-badge {
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--ion-color-primary);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 10px;
+        white-space: nowrap;
+      }
+    }
+
+    .teacher-info {
+      .teacher-name {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--ion-text-color);
+        margin: 0 0 4px;
+      }
+
+      .teacher-label {
+        font-size: 13px;
+        color: var(--ion-color-medium);
+        margin: 0;
+      }
+    }
+  }
+
+  // ── Students Section ───────────────────────────────
+  .students-section {
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: var(--ion-color-medium);
+      padding: 0 0 8px;
+      margin: 0;
+      display: block;
+    }
+  }
+
+  ion-list {
+    background: transparent;
+
+    ion-item {
+      --background: var(--ion-card-background);
+      --padding-start: 16px;
+      --padding-end: 16px;
+      margin-bottom: 8px;
+      border-radius: 12px;
+      border: 1px solid var(--app-border-color);
+
+      ion-avatar {
+        width: 48px;
+        height: 48px;
+      }
+
+      ion-label {
+        h2 {
+          font-weight: 600;
+          font-size: 16px;
+          color: var(--ion-text-color);
+          margin-bottom: 4px;
+        }
+
+        .role-badge {
+          display: inline-block;
+          background: var(--ion-color-primary);
+          color: white;
+          padding: 2px 8px;
+          border-radius: 12px;
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+.dark .classmates-content {
+  .teacher-card {
+    border: none;
+    box-shadow: 1px 1px 5px #05080d;
+  }
+
+  ion-item {
+    border: none;
+    box-shadow: 1px 1px 5px #05080d;
+  }
 }
